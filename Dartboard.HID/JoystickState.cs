@@ -8,6 +8,13 @@ namespace DART.Dartboard.HID
 {
     public class JoystickState
     {
-        public int X { get; set; }
+        public Stick Left { get; set; }
+        public Stick Right { get; set; }
+    }
+
+    public struct Stick
+    {
+        public decimal X { get; set; }
+        public decimal Y { get; set; }
     }
 }

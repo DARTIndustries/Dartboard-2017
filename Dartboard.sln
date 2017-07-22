@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dartboard.Tests", "Dartboar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dartboard.Utils", "Dartboard.Utils\Dartboard.Utils.csproj", "{550ACDC7-6EE7-4256-81C1-0D5ED91BBB9B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{747AEF04-6E89-4B6D-94D8-247EE6FDE598}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{550ACDC7-6EE7-4256-81C1-0D5ED91BBB9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{550ACDC7-6EE7-4256-81C1-0D5ED91BBB9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{550ACDC7-6EE7-4256-81C1-0D5ED91BBB9B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{747AEF04-6E89-4B6D-94D8-247EE6FDE598}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{747AEF04-6E89-4B6D-94D8-247EE6FDE598}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{747AEF04-6E89-4B6D-94D8-247EE6FDE598}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{747AEF04-6E89-4B6D-94D8-247EE6FDE598}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

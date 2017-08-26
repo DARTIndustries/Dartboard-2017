@@ -1,11 +1,18 @@
-﻿<Window x:Class="DART.Dartboard.GUI.MainWindow"
+﻿<Window xmlns:Controls="clr-namespace:DART.Dartboard.GUI.Controls"  x:Class="DART.Dartboard.GUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="431.049" Width="950.086" Background="#FFEF2525">
     <Grid>
-        
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="333" Margin="490,10,0,0" VerticalAlignment="Top" Width="444">
+            <Controls:MjpegStream x:Name="left"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="334" Margin="10,10,0,0" VerticalAlignment="Top" Width="444">
+            <Controls:MjpegStream x:Name="right"/>
+        </Border>
+        <Button Content="Button" Click="Start_Click" HorizontalAlignment="Left" Margin="430,374,0,0" VerticalAlignment="Top" Width="75"/>
+
     </Grid>
 </Window>

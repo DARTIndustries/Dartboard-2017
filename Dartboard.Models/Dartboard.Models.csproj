@@ -50,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class1.cs" />
+    <Compile Include="HID\GamepadState.cs" />
+    <Compile Include="HID\HIDConfig.cs" />
+    <Compile Include="HID\JoystickState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

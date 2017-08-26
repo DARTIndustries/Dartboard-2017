@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AutoMapper, Version=6.1.1.0, Culture=neutral, PublicKeyToken=be96cd2c38ef1005, processorArchitecture=MSIL">
+      <HintPath>..\packages\AutoMapper.6.1.1\lib\net45\AutoMapper.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
@@ -58,15 +61,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="JoystickState.cs" />
+    <Compile Include="HIDManager.cs" />
     <Compile Include="JoystickWrapper.cs" />
-    <Compile Include="DeviceType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnableToAcquireDeviceException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dartboard.Models\Dartboard.Models.csproj">
+      <Project>{e18d530b-ffdf-4383-86a4-f92a2497221f}</Project>
+      <Name>Dartboard.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dartboard.Utils\Dartboard.Utils.csproj">
       <Project>{550acdc7-6ee7-4256-81c1-0d5ed91bbb9b}</Project>
       <Name>Dartboard.Utils</Name>

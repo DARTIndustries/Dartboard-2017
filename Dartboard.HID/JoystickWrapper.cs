@@ -12,14 +12,14 @@ namespace DART.Dartboard.HID
         private Joystick _joystick;
         private readonly DirectInput _input;
 
-        public JoystickWrapper(DeviceType type)
+        public JoystickWrapper()
         {
             _input = new DirectInput();
 
             // Find a Joystick Guid
             var joystickGuid = Guid.Empty;
 
-            var devs = FindDevices(type);
+            var devs = FindDevices(DeviceType.Joystick);
             var found = devs.FirstOrDefault();
             if (found != null)
                 joystickGuid = found.InstanceGuid;
@@ -30,16 +30,15 @@ namespace DART.Dartboard.HID
             }
             else
             {
-                Log.InfoFormat("Attempting to acquire {0} with GUID {1}", type, joystickGuid);
+                Log.InfoFormat("Attempting to acquire Joystick with GUID {0}", joystickGuid);
                 Acquire(joystickGuid);
                 Acquired = true;
             }
         }
 
-        public DeviceInstance[] FindDevices(DeviceType dt)
+        private DeviceInstance[] FindDevices(DeviceType dt)
         {
-            var d = (SharpDX.DirectInput.DeviceType) dt;
-            return _input.GetDevices(d, DeviceEnumerationFlags.AllDevices).ToArray();
+            return _input.GetDevices(dt, DeviceEnumerationFlags.AllDevices).ToArray();
         }
 
         public bool Acquired { get; } = false;
@@ -54,17 +53,11 @@ namespace DART.Dartboard.HID
             Log.InfoFormat("Acquired {0} with GUID {1}", _joystick.Information.ProductName, deviceGuid);
         }
 
-        public JoystickState _currentState;
 
-        public void Poll()
+        public JoystickState GetState()
         {
             _joystick.Poll();
-            if (_joystick == null)
-                return;
-
-            var s = _joystick.GetCurrentState();
-            _currentState = new JoystickState();
-            _currentState.X = s.X;
+            return _joystick.GetCurrentState();
         }
     }
 }

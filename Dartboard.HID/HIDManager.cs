@@ -27,7 +27,7 @@ namespace DART.Dartboard.HID
                         if (y == null)
                             y = new JoystickState();
 
-                        y.X = JoystickFunction(state.X, 65535, 0);
+                        y.X = JoystickFunction(state.X);
                         y.Y = JoystickFunction(state.Y, 65535, 0);
                         y.RotationZ = JoystickFunction(state.RotationZ, 65535, 0);
                         y.Slider = TriggerFunction(state.Sliders[0], 65535, 0);
@@ -85,10 +85,9 @@ namespace DART.Dartboard.HID
             _config = config;
         }
 
-        #region Joystick
-
         private JoystickWrapper _wrapper;
-        public JoystickState GetJoystickState()
+        private SharpDX.XInput.Controller _controller;
+        public void AcquireAll()
         {
             if (_wrapper == null)
                 _wrapper = new JoystickWrapper();
@@ -96,9 +95,26 @@ namespace DART.Dartboard.HID
             if (!_wrapper.Acquired && _config.FailOnNoDeviceFound)
             {
                 Log.Fatal("Unable to connect to a joystick");
-                throw new UnableToAcquireDeviceException("Joystick");
+                if (_config.FailOnNoDeviceFound)
+                    throw new UnableToAcquireDeviceException("Joystick");
             }
 
+            if (_controller == null || !_controller.IsConnected)
+            {
+                _controller = AcquireController();
+                if (_controller == null)
+                {
+                    Log.Fatal("Unable to connect to controller");
+                    if (_config.FailOnNoDeviceFound)
+                        throw new UnableToAcquireDeviceException("Controller");
+                }
+            }
+        }
+
+        #region Joystick
+
+        public JoystickState GetJoystickState()
+        {
             var js = Mapper.Map<JoystickState>(_wrapper.GetState());
             if (_config.JoystickDeadZone.HasValue)
                 js.ApplyDeadZone(_config.JoystickDeadZone.Value);
@@ -113,19 +129,8 @@ namespace DART.Dartboard.HID
 
         #region Gamepad
 
-        private SharpDX.XInput.Controller _controller;
         public GamepadState GetGamepadState()
         {
-            if (_controller == null || !_controller.IsConnected)
-            {
-                _controller = AcquireController();
-                if (_controller == null)
-                {
-                    Log.Fatal("Unable to connect to controller");
-                    throw new UnableToAcquireDeviceException("Controller");
-                }
-            }
-
             var state = _controller.GetState();
 
             var gs = Mapper.Map<GamepadState>(state.Gamepad);

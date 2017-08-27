@@ -15,7 +15,7 @@ namespace Sandbox
         static void Main(string[] args)
         {
             var manager = HIDManager.SharedManager;
-
+            manager.AcquireAll();
             while (true)
             {
                 var state1 = manager.GetGamepadState();

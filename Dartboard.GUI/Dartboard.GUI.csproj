@@ -40,6 +40,12 @@
     <Reference Include="Common.Logging.Core, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.Core.3.3.1\lib\net40\Common.Logging.Core.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="MjpegProcessor, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MJPEG-Decoder.1.2\lib\net35\MjpegProcessor.dll</HintPath>
     </Reference>
@@ -114,6 +120,14 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dartboard.HID\Dartboard.HID.csproj">
+      <Project>{133736ec-b854-4f1b-bd10-c31e25817e11}</Project>
+      <Name>Dartboard.HID</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dartboard.Models\Dartboard.Models.csproj">
+      <Project>{E18D530B-FFDF-4383-86A4-F92A2497221F}</Project>
+      <Name>Dartboard.Models</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dartboard.Utils\Dartboard.Utils.csproj">
       <Project>{550acdc7-6ee7-4256-81c1-0d5ed91bbb9b}</Project>
       <Name>Dartboard.Utils</Name>

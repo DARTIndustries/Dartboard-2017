@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Timers;
 using System.Windows;
 using MjpegProcessor;
+using DART.Dartboard.HID;
 
 namespace DART.Dartboard.GUI
 {
@@ -9,15 +11,27 @@ namespace DART.Dartboard.GUI
     /// </summary>
     public partial class MainWindow : Window
     {
+        private Timer t;
+
+
         public MainWindow()
         {
             InitializeComponent();
+            t = new Timer(20);
+            t.Elapsed += TOnElapsed;
+            t.Start();
+
+            PrimaryStream.Source = new Uri("http://localhost:8080/");
+            SecondaryStream.Source = new Uri("http://localhost:8080/");
         }
 
-        private void Start_Click(object sender, RoutedEventArgs e)
+        private void TOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
         {
-            left.Source = new Uri("http://129.25.217.182:8080/?action=stream_0");
-            right.Source = new Uri("http://129.25.217.182:8080/?action=stream_1");
+            Dispatcher.Invoke(() =>
+            {
+                //test.Value = HIDManager.SharedManager.GetJoystickState().Slider;
+            });
         }
+
     }
 }

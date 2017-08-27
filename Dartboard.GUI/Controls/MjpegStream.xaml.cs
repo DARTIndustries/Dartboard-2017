@@ -47,7 +47,6 @@ namespace DART.Dartboard.GUI.Controls
 
         public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(Uri), typeof(MjpegStream));
 
-
         private Uri _source;
         public Uri Source
         {

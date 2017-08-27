@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Timers;
 using System.Windows;
+using Common.Logging;
+using DART.Dartboard.GUI.Logging;
 using MjpegProcessor;
 using DART.Dartboard.HID;
 
@@ -13,11 +15,24 @@ namespace DART.Dartboard.GUI
     {
         private Timer t;
 
+        private ILog _log = LogManager.GetLogger<MainWindow>();
 
         public MainWindow()
         {
             InitializeComponent();
-            t = new Timer(20);
+            ConsoleOutput.Text = "";
+            TextBoxLogger.GlobalLogTextBox = ConsoleOutput;
+
+            HIDManager.SharedManager.AcquireAll();
+
+
+            _log.Debug("Test");
+            _log.Warn("Test");
+            _log.Error("Test");
+            _log.Fatal("Test");
+            
+
+            t = new Timer(50);
             t.Elapsed += TOnElapsed;
             t.Start();
 
@@ -27,10 +42,8 @@ namespace DART.Dartboard.GUI
 
         private void TOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
         {
-            Dispatcher.Invoke(() =>
-            {
-                //test.Value = HIDManager.SharedManager.GetJoystickState().Slider;
-            });
+            HidDisplay.JoystickState = HIDManager.SharedManager.GetJoystickState();
+            HidDisplay.GamepadState = HIDManager.SharedManager.GetGamepadState();
         }
 
     }

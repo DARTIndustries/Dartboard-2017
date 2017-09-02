@@ -56,8 +56,8 @@ namespace DART.Dartboard.HID
 
         public JoystickState GetState()
         {
-            _joystick.Poll();
-            return _joystick.GetCurrentState();
+            _joystick?.Poll();
+            return _joystick?.GetCurrentState();
         }
     }
 }

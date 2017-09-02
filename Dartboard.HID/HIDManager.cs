@@ -116,6 +116,9 @@ namespace DART.Dartboard.HID
         public JoystickState GetJoystickState()
         {
             var js = Mapper.Map<JoystickState>(_wrapper.GetState());
+            if (js == null)
+                return null;
+
             if (_config.JoystickDeadZone.HasValue)
                 js.ApplyDeadZone(_config.JoystickDeadZone.Value);
 
@@ -131,6 +134,9 @@ namespace DART.Dartboard.HID
 
         public GamepadState GetGamepadState()
         {
+            if (_controller == null)
+                return null;
+
             var state = _controller.GetState();
 
             var gs = Mapper.Map<GamepadState>(state.Gamepad);

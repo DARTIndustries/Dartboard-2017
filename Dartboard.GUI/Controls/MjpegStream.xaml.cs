@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,41 +24,26 @@ namespace DART.Dartboard.GUI.Controls
     /// </summary>
     public partial class MjpegStream : UserControl
     {
-        private readonly MjpegDecoder _decoder;
-
         protected ILog Log;
 
         public MjpegStream()
         {
             InitializeComponent();
-            _decoder = new MjpegDecoder();
-            _decoder.FrameReady += DecoderOnFrameReady;
-            _decoder.Error += DecoderOnError;
             Log = LogManager.GetLogger(GetType());
+
+            vlc.MediaPlayer.VlcLibDirectory = new DirectoryInfo(@"c:\Program Files (x86)\VideoLAN\VLC\");
+            vlc.MediaPlayer.VlcMediaplayerOptions = new[] {"--network-caching=0"};
+            vlc.MediaPlayer.EndInit();
         }
 
-        private void DecoderOnError(object sender, ErrorEventArgs errorEventArgs)
+        public static readonly DependencyProperty SourceProperty =
+            DependencyProperty.Register("Source", typeof(Uri), typeof(MjpegStream));
+
+        public void Start()
         {
-            Log.Error(errorEventArgs.Message);
+            vlc.MediaPlayer.Play(Source);
         }
 
-        private void DecoderOnFrameReady(object sender, FrameReadyEventArgs frameReadyEventArgs)
-        {
-            canvas.Source = _decoder.BitmapImage;
-        }
-
-        public static readonly DependencyProperty SourceProperty = DependencyProperty.Register("Source", typeof(Uri), typeof(MjpegStream));
-
-        private Uri _source;
-        public Uri Source
-        {
-            get { return _source; }
-            set
-            {
-                _source = value;
-                _decoder.StopStream();
-                _decoder.ParseStream(value);
-            }
-        }
+        public Uri Source { get; set; }
     }
 }

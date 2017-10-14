@@ -98,5 +98,7 @@ namespace Dartboard.Utils
         {
             return Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
         }
+
+
     }
 }

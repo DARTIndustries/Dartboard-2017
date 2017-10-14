@@ -2,6 +2,7 @@
 using System.Timers;
 using System.Windows;
 using Common.Logging;
+using DART.Dartboard.Control;
 using DART.Dartboard.GUI.Logging;
 using MjpegProcessor;
 using DART.Dartboard.HID;
@@ -23,28 +24,18 @@ namespace DART.Dartboard.GUI
             ConsoleOutput.Text = "";
             TextBoxLogger.GlobalLogTextBox = ConsoleOutput;
 
-            HIDManager.SharedManager.AcquireAll();
 
 
-            _log.Debug("Test");
-            _log.Warn("Test");
-            _log.Error("Test");
-            _log.Fatal("Test");
-            
-
-            t = new Timer(50);
-            t.Elapsed += TOnElapsed;
-            t.Start();
-
-            PrimaryStream.Source = new Uri("http://localhost:8080/");
-            SecondaryStream.Source = new Uri("http://localhost:8080/");
+            PrimaryStream.Source = new Uri("http://129.25.217.182:8080/?action=stream_0");
+            PrimaryStream.Start();
+            SecondaryStream.Source = new Uri("http://129.25.217.182:8080/?action=stream_1");
+            SecondaryStream.Start();
         }
 
-        private void TOnElapsed(object sender, ElapsedEventArgs elapsedEventArgs)
+        private void GlobalPulseOnPulse(TimeSpan timeSpan)
         {
             HidDisplay.JoystickState = HIDManager.SharedManager.GetJoystickState();
             HidDisplay.GamepadState = HIDManager.SharedManager.GetGamepadState();
         }
-
     }
 }

@@ -93,10 +93,6 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\MjpegStream.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -107,9 +103,6 @@
     </Compile>
     <Compile Include="Controls\HIDDisplay.xaml.cs">
       <DependentUpon>HIDDisplay.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\MjpegStream.xaml.cs">
-      <DependentUpon>MjpegStream.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logging\TextBoxLoggerFactoryAdapter.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -160,6 +153,10 @@
     <ProjectReference Include="..\Dartboard.Utils\Dartboard.Utils.csproj">
       <Project>{550acdc7-6ee7-4256-81c1-0d5ed91bbb9b}</Project>
       <Name>Dartboard.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simulator\Simulator.csproj">
+      <Project>{e5493d32-278f-4db3-8353-0de83771b66f}</Project>
+      <Name>Simulator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

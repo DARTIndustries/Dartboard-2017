@@ -12,11 +12,6 @@ namespace DART.Dartboard.Models
         {
         }
 
-        public DoRequestMessage(ProcessingFrame frame)
-        {
-            
-        }
-
         public Do Do { get; set; }
         public Request Request { get; set; }
     }

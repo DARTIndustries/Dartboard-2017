@@ -48,6 +48,10 @@
     <Reference Include="Microsoft.Scripting.Metadata, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Scripting.Metadata.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.ValueTuple, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -65,6 +69,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dart2017\Robot2017.cs" />
+    <Compile Include="GenericRobot\JsonRobot.cs" />
     <Compile Include="GlobalPulse.cs" />
     <Compile Include="InputProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,6 +90,10 @@
     <ProjectReference Include="..\Dartboard.Utils\Dartboard.Utils.csproj">
       <Project>{550acdc7-6ee7-4256-81c1-0d5ed91bbb9b}</Project>
       <Name>Dartboard.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simulator\Simulator.csproj">
+      <Project>{e5493d32-278f-4db3-8353-0de83771b66f}</Project>
+      <Name>Simulator</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

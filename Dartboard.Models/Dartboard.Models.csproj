@@ -53,9 +53,7 @@
     <Compile Include="HID\GamepadState.cs" />
     <Compile Include="HID\HIDConfig.cs" />
     <Compile Include="HID\JoystickState.cs" />
-    <Compile Include="ProcessingFrame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RobotConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

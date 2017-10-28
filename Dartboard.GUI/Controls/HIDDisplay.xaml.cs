@@ -157,7 +157,6 @@ namespace DART.Dartboard.GUI.Controls
 
             #endregion
 
-
             #region Gamepad
 
             const int gamepadStickRadius = 50;

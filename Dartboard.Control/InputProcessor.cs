@@ -1,36 +1,44 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using Dartboard.Utils;
 using DART.Dartboard.Control.GenericRobot;
 using DART.Dartboard.HID;
+using DART.Dartboard.Models;
+using DART.Dartboard.Models.HID;
+using Vector3D;
 
 namespace DART.Dartboard.Control
 {
-    public class InputProcessor
+    public class InputProcessor : LoggableObject
     {
         private readonly Robot _robot;
 
         public InputProcessor(Robot robot)
         {
             _robot = robot;
-            HIDManager.SharedManager.AcquireAll();
-            GlobalPulse.Pulse += PulseRecieve;
         }
 
-        ~InputProcessor()
+        public Do Process(TimeSpan timeSince, GamepadState gamepad, JoystickState joystick)
         {
-            GlobalPulse.Pulse -= PulseRecieve;
-        }
+            double x = joystick.X * joystick.Slider;
+            double y = joystick.Y * joystick.Slider;
 
-        private void PulseRecieve(TimeSpan timeSince)
-        {
-            // Gampad will be used for the co-pilot. It will be in charge of the servo arm
-            var gamepad = HIDManager.SharedManager.GetGamepadState();
+            double z = 0;
+            if (joystick.Buttons[3])
+                z -= 1;
+            if (joystick.Buttons[4])
+                z += 1;
 
-            // Joystick will be the for the pilot. It controls primary motor functions. 
-            var joystick = HIDManager.SharedManager.GetJoystickState();
+            z *= joystick.Slider;
 
-            
+            var robotVector = new Vector(x, y, z);
+
+            return new Do()
+            {
+                Lights = "",
+                Motor = _robot.CalculateMotorValues(robotVector, 0,  gamepad)
+            };
         }
     }
 }

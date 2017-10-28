@@ -1,10 +1,12 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Media.Media3D;
+using DART.Dartboard.Models.Configuration;
+using DART.Dartboard.Utils;
 using HelixToolkit.Wpf;
 using Ionic.Zip;
 using Newtonsoft.Json;
-using Simulator.Serialization;
+using Simulator.Util;
 
 namespace Simulator.Control3D
 {
@@ -25,7 +27,7 @@ namespace Simulator.Control3D
             if (!File.Exists(path))
                 throw new FileNotFoundException("Unable to find Robot", path);
 
-            RobotConfig cfg;
+            RobotConfiguration cfg;
             Model3DGroup model;
             var importer = new ModelImporter();
 
@@ -35,7 +37,7 @@ namespace Simulator.Control3D
                 using (var zip = ZipFile.Read(path))
                 using (var reader = new StreamReader(zip["robot.json"].OpenReader()))
                 {
-                    cfg = JsonConvert.DeserializeObject<RobotConfig>(reader.ReadToEnd());
+                    cfg = JsonConvert.DeserializeObject<RobotConfiguration>(reader.ReadToEnd(), new VectorConverter(), new MatrixConverter());
 
                     temp = Path.Combine(Path.GetTempPath(), Path.GetFileNameWithoutExtension(Path.GetTempFileName()));
                     zip[cfg.ModelFile].Extract(temp);
@@ -46,7 +48,7 @@ namespace Simulator.Control3D
             }
             else if (path.EndsWith(".json"))
             {
-                cfg = JsonConvert.DeserializeObject<RobotConfig>(File.ReadAllText(path));
+                cfg = JsonConvert.DeserializeObject<RobotConfiguration>(File.ReadAllText(path), new VectorConverter(), new MatrixConverter());
 
                 model = importer.Load(Path.Combine(Path.GetDirectoryName(path), cfg.ModelFile));
             }
@@ -57,9 +59,9 @@ namespace Simulator.Control3D
 
             foreach (var motor in cfg.Motors)
             {
-                controller.Register(motor.Key, new Motor(motor.Vector)
+                controller.Register(motor.Key, new Motor(motor.Vector.ToVector3D())
                 {
-                    ThrustLocation = motor.Location
+                    ThrustLocation = motor.Location.ToPoint3D()
                 });
             }
 
@@ -68,7 +70,7 @@ namespace Simulator.Control3D
                 Model = model,
                 Name = cfg.Name,
                 MotorContoller = controller,
-                CenterOfMass = cfg.CenterOfMass,
+                CenterOfMass = cfg.CenterOfMass.ToPoint3D(),
                 Mass = cfg.Mass
             };
         }

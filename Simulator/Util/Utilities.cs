@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media.Media3D;
 using BulletSharp.Math;
+using MathNet.Numerics.LinearAlgebra;
 using Simulator.Control3D;
 using Quaternion = System.Windows.Media.Media3D.Quaternion;
 
@@ -121,6 +122,16 @@ namespace Simulator.Util
                 (float)v.M21, (float)v.M22, (float)v.M23, (float)v.M24,
                 (float)v.M31, (float)v.M32, (float)v.M33, (float)v.M34,
                 (float)v.OffsetX, (float)v.OffsetY, (float)v.OffsetZ, (float)v.M44);
+        }
+
+        public static Point3D ToPoint3D(this Vector<double> vec)
+        {
+            return new Point3D(vec[0], vec[1], vec[2]);
+        }
+
+        public static Vector3D ToVector3D(this Vector<double> vec)
+        {
+            return new Vector3D(vec[0], vec[1], vec[2]);
         }
 
     }

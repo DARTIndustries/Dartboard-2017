@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
 
-namespace Dartboard.Utils
+namespace DART.Dartboard.Utils
 {
     public static class Numerics
     {
@@ -99,6 +93,9 @@ namespace Dartboard.Utils
             return Math.Sqrt(Math.Pow(a, 2) + Math.Pow(b, 2));
         }
 
-
+        public static Vector<double> Vector3D(double x, double y, double z)
+        {
+            return Vector<double>.Build.DenseOfArray(new[] {x, y, z});
+        }
     }
 }

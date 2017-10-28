@@ -1,7 +1,7 @@
-﻿using Dartboard.Utils;
+﻿using DART.Dartboard.Utils;
 using NUnit.Framework;
 
-namespace DART.Dartboard.Tests
+namespace DART.Dartboard.Tests.Utils
 {
     [TestFixture]
     public class NumericsTests

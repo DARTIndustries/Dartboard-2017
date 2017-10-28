@@ -1,13 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Timers;
 using System.Windows;
 using Common.Logging;
 using DART.Dartboard.Control;
-using DART.Dartboard.Control.Dart2017;
+using DART.Dartboard.Control.GenericRobot;
 using DART.Dartboard.GUI.Logging;
 using MjpegProcessor;
 using DART.Dartboard.HID;
-using Simulator.Control3D;
+using DART.Dartboard.Models.Configuration;
+using DART.Dartboard.Utils;
+using MathNet.Numerics.LinearAlgebra;
+using Newtonsoft.Json;
+using Robot = Simulator.Control3D.Robot;
+using VectorConverter = DART.Dartboard.Utils.VectorConverter;
 
 namespace DART.Dartboard.GUI
 {
@@ -31,11 +38,14 @@ namespace DART.Dartboard.GUI
 
             HIDManager.SharedManager.AcquireAll();
 
-            var robot = Robot.LoadFromFile(@".\Robots\DartV1\robot.json");
 
-            virtualRobot.LoadRobot(robot);
+            var path = @".\Robots\DartV1\robot.json";
+            var _3DRobot = Robot.LoadFromFile(path);
+            var robot = JsonConvert.DeserializeObject<RobotConfiguration>(File.ReadAllText(path), new VectorConverter(), new MatrixConverter());
 
-            _proc = new InputProcessor(new Robot2017());
+            virtualRobot.LoadRobot(_3DRobot);
+
+            _proc = new InputProcessor(new JsonRobot(robot));
 
             GlobalPulse.Pulse += GlobalPulseOnPulse;
         }

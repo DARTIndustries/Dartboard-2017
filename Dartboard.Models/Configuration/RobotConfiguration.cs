@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using System.Windows.Media.Media3D;
+using MathNet.Numerics.LinearAlgebra;
 
-namespace Simulator.Serialization
+namespace DART.Dartboard.Models.Configuration
 {
-    public class RobotConfig
+    public class RobotConfiguration
     {
         public string Name { get; set; }
 
@@ -11,7 +11,9 @@ namespace Simulator.Serialization
 
         public List<MotorConfiguration> Motors { get; set; }
 
-        public Point3D CenterOfMass { get; set; }
+        public Matrix<double> MotorTransformMatrix { get; set; }
+
+        public Vector<double> CenterOfMass { get; set; }
 
         public double Mass { get; set; }
     }

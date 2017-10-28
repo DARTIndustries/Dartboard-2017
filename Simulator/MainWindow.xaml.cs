@@ -19,7 +19,6 @@ using Microsoft.Scripting.Utils;
 using SharpDX.DirectInput;
 using SharpDX.XInput;
 using Simulator.Control3D;
-using Simulator.Serialization;
 using DeviceType = SharpDX.DirectInput.DeviceType;
 using Key = System.Windows.Input.Key;
 using Keyboard = System.Windows.Input.Keyboard;

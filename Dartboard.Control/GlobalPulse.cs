@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Common.Logging;
-using Dartboard.Utils;
 
 namespace DART.Dartboard.Control
 {

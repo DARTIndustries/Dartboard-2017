@@ -3,7 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Common.Logging;
-using Dartboard.Utils;
+using DART.Dartboard.Utils;
 
 namespace DART.Dartboard.HID
 {

@@ -65,6 +65,9 @@
     <Reference Include="IronPython.Wpf, Version=2.7.7.0, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\packages\IronPython.2.7.7\lib\Net45\IronPython.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="MathNet.Numerics, Version=3.20.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MathNet.Numerics.3.20.0\lib\net40\MathNet.Numerics.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Dynamic, Version=1.1.2.22, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL">
       <HintPath>..\packages\DynamicLanguageRuntime.1.1.2\lib\Net45\Microsoft.Dynamic.dll</HintPath>
     </Reference>
@@ -122,8 +125,6 @@
       <DependentUpon>VirtualRobot.xaml</DependentUpon>
     </Compile>
     <Compile Include="Control3D\PrincipalAxis.cs" />
-    <Compile Include="Serialization\MotorConfiguration.cs" />
-    <Compile Include="Serialization\RobotConfig.cs" />
     <Compile Include="Util\Overlay.cs" />
     <Compile Include="Util\Utilities.cs" />
     <Page Include="Control3D\VirtualRobot.xaml">
@@ -188,6 +189,16 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dartboard.Models\Dartboard.Models.csproj">
+      <Project>{e18d530b-ffdf-4383-86a4-f92a2497221f}</Project>
+      <Name>Dartboard.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dartboard.Utils\Dartboard.Utils.csproj">
+      <Project>{550acdc7-6ee7-4256-81c1-0d5ed91bbb9b}</Project>
+      <Name>Dartboard.Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\BulletSharp.0.9\build\net40-client\BulletSharp.targets" Condition="Exists('..\packages\BulletSharp.0.9\build\net40-client\BulletSharp.targets')" />

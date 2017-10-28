@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dartboard.Utils;
+using DART.Dartboard.Utils;
 
 namespace DART.Dartboard.Models.HID
 {

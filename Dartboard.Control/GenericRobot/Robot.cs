@@ -5,31 +5,35 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using DART.Dartboard.Models.HID;
-using Vector3D;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace DART.Dartboard.Control.GenericRobot
 {
     public abstract class Robot
     {
-        public virtual sbyte[] CalculateMotorValues(Vector directionVector, double yaw, GamepadState gamepad)
+        public virtual sbyte[] CalculateMotorValues(Vector<double> directionVector, double yaw, GamepadState gamepad)
         {
-            return new sbyte[]
+            var ret = new sbyte[NumberOfMotors];
+
+            for (var i = 0; i < MotorVectors.Length; i++)
             {
-                ToSbyte(directionVector.X),
-                ToSbyte(directionVector.X),
-                ToSbyte(directionVector.Y),
-                ToSbyte(directionVector.Y),
-                ToSbyte(directionVector.Z),
-                ToSbyte(directionVector.Z),
-            };
+                ret[i] = ToSbyte(directionVector.DotProduct(CorrectVector(MotorVectors[i])));
+            }
+
+            return ret;
         }
 
-        public virtual Vector DirectionVector(Vector dirVector)
+        public virtual Vector<double> DirectionVector(Vector<double> dirVector)
         {
             return dirVector;
         }
 
-        public abstract Vector[] GetMotorVectors { get; }
+        public virtual Vector<double> CorrectVector(Vector<double> v)
+        {
+            return v;
+        }
+
+        public abstract Vector<double>[] MotorVectors { get; }
 
         public abstract int NumberOfMotors { get; }
 

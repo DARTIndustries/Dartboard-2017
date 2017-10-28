@@ -6,10 +6,10 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Common.Logging;
-using Dartboard.Utils;
 using DART.Dartboard.Models.HID;
+using DART.Dartboard.Utils;
 using SharpDX.XInput;
-using static Dartboard.Utils.Numerics;
+using static DART.Dartboard.Utils.Numerics;
 
 namespace DART.Dartboard.HID
 {

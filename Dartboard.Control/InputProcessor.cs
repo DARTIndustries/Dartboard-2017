@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Dartboard.Utils;
 using DART.Dartboard.Control.GenericRobot;
 using DART.Dartboard.HID;
 using DART.Dartboard.Models;
 using DART.Dartboard.Models.HID;
-using Vector3D;
+using DART.Dartboard.Utils;
+using MathNet.Numerics.LinearAlgebra;
 
 namespace DART.Dartboard.Control
 {
@@ -32,7 +32,7 @@ namespace DART.Dartboard.Control
 
             z *= joystick.Slider;
 
-            var robotVector = new Vector(x, y, z);
+            var robotVector = Vector<double>.Build.DenseOfArray(new[] {x, y, z});
 
             return new Do()
             {

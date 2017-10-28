@@ -6,7 +6,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using DART.Dartboard.HID;
 using System.Net.Sockets;
-using Dartboard.Utils;
 
 namespace Sandbox
 {

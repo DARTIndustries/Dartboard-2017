@@ -36,14 +36,20 @@ namespace DART.Dartboard.Models.HID
             Slider = Math.Round(Slider, precision);
         }
 
-        public void ApplyDeadZone(double dead)
+        public void ApplyDeadZone(double xyDead, double zDead)
         {
-            var res = Numerics.DeadZoneCalculation(X, Y, dead);
-            X = res.x;
-            Y = res.y;
+            if (xyDead != 0)
+            {
+                var res = Numerics.DeadZoneCalculation(X, Y, xyDead);
+                X = res.x;
+                Y = res.y;
+            }
 
-            res = Numerics.DeadZoneCalculation(RotationZ, 0, dead);
-            RotationZ = res.x;
+            if (zDead != 0)
+            {
+                var res = Numerics.DeadZoneCalculation(RotationZ, 0, zDead);
+                RotationZ = res.x;
+            }
         }
     }
 

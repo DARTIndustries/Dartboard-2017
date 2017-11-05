@@ -152,7 +152,12 @@ namespace DART.Dartboard.GUI.Controls
                 DrawCrosshairDirection(drawingContext, dot, 25, 30.0 * JoystickState.RotationZ);
 
                 var activeRect = CalculateRect(throttleRect, JoystickState.Slider);
-                FillGuage(drawingContext, activeRect, JoystickState.Slider);
+                FillGuage(
+                    drawingContext,
+                    activeRect,
+                    JoystickState.Slider,
+                    fillOverride: JoystickState.Buttons[2] ? Brushes.Red:null,
+                    textOverride: JoystickState.Buttons[2] ? "Over\nDrive":null);
             }
 
             #endregion
@@ -306,13 +311,13 @@ namespace DART.Dartboard.GUI.Controls
             drawingContext.DrawRectangle(GuageBackground, new Pen(BorderBrush, 2), rect);
         }
 
-        private void FillGuage(DrawingContext drawingContext, Rect filledRect, double perc, bool drawText = true)
+        private void FillGuage(DrawingContext drawingContext, Rect filledRect, double perc, bool drawText = true, Brush fillOverride = null, string textOverride = null)
         {
-            drawingContext.DrawRectangle(Foreground, new Pen(BorderBrush, 2), filledRect);
+            drawingContext.DrawRectangle(fillOverride ?? Foreground, new Pen(BorderBrush, 2), filledRect);
 
             if (perc > 0.1 && drawText)
             {
-                var ftext = new FormattedText(perc.ToString("P"), CultureInfo.CurrentCulture,
+                var ftext = new FormattedText(textOverride ?? perc.ToString("P"), CultureInfo.CurrentCulture,
                     FlowDirection.LeftToRight, new Typeface(FontFamily, FontStyle, FontWeight, FontStretch),
                     FontSize,
                     BorderBrush);

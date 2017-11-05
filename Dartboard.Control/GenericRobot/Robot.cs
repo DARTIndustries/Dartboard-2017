@@ -13,11 +13,15 @@ namespace DART.Dartboard.Control.GenericRobot
     {
         public virtual sbyte[] CalculateMotorValues(Vector<double> directionVector, double yaw, GamepadState gamepad)
         {
-            var ret = new sbyte[NumberOfMotors];
-
-            for (var i = 0; i < MotorVectors.Length; i++)
+            var ret = new sbyte[MotorKeys.Count()];
+            int i = 0;
+            foreach (var key in MotorKeys)
             {
-                ret[i] = ToSbyte(directionVector.DotProduct(CorrectVector(MotorVectors[i])));
+                var motorValueNoYaw = directionVector.DotProduct(CorrectVector(MotorVectors[key]));
+
+                var motorValue = ApplyYaw(key, motorValueNoYaw, yaw);
+
+                ret[i++] = ToSbyte(motorValue);
             }
 
             return ret;
@@ -33,9 +37,14 @@ namespace DART.Dartboard.Control.GenericRobot
             return v;
         }
 
-        public abstract Vector<double>[] MotorVectors { get; }
+        public virtual double ApplyYaw(string key, double current, double yaw)
+        {
+            return current;
+        }
 
-        public abstract int NumberOfMotors { get; }
+        public abstract Dictionary<string, Vector<double>> MotorVectors { get; }
+
+        public abstract IEnumerable<string> MotorKeys { get; }
 
         protected sbyte ToSbyte(double d)
         {

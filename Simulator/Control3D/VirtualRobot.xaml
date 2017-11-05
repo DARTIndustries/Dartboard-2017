@@ -7,7 +7,7 @@
              xmlns:h="http://helix-toolkit.org/wpf"
              mc:Ignorable="d" MinHeight="300" MinWidth="300">
     <Grid>
-        <h:HelixViewport3D x:Name="viewport" Background="CornflowerBlue" CalculateCursorPosition="True" ShowFrameRate="True" ShowCoordinateSystem="True" IsMoveEnabled="False" />
+        <h:HelixViewport3D x:Name="viewport" Background="CornflowerBlue" CalculateCursorPosition="True" MouseDoubleClick="Viewport_OnMouseDoubleClick" ShowFrameRate="True" ShowCoordinateSystem="True" IsMoveEnabled="False" />
         <StackPanel Visibility="{x:Static util:DebugMode.DebugVisibility}" Orientation="Horizontal">
 
             <Grid x:Name="CursorPositionBlock" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" Margin="10,0,0,0"  Opacity="1" IsHitTestVisible="True">
@@ -77,14 +77,14 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="x" Margin="5,0,4,0"/>
                 <TextBox Grid.Row="0" Grid.Column="1" BorderThickness="0" TextAlignment="Right" Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                         Text="{Binding Path=CursorOnConstructionPlanePosition.X, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=---}" />
+                         Text="{Binding Path=CameraController.CameraPosition.X, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=---}" />
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="y" Margin="5,0,4,0" />
                 <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="0" TextAlignment="Right" Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                         Text="{Binding Path=CursorOnConstructionPlanePosition.Y, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=---}" />
+                         Text="{Binding Path=CameraController.CameraPosition.Y, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=---}" />
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="z" Margin="5,0,4,0" />
                 <TextBox Grid.Row="2" Grid.Column="1" BorderThickness="0" TextAlignment="Right" Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                         Text="{Binding Path=CursorOnConstructionPlanePosition.Z, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=---}" />
-                <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="OnConstructionPlane" Background="Bisque"/>
+                         Text="{Binding Path=CameraController.CameraPosition.Z, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=---}" />
+                <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="Camera Controller" Background="Bisque"/>
                 <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="Position" Background="Bisque"/>
             </Grid>
 

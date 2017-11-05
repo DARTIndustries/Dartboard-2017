@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media.Media3D;
 using DART.Dartboard.Models.Configuration;
@@ -7,6 +8,7 @@ using HelixToolkit.Wpf;
 using Ionic.Zip;
 using Newtonsoft.Json;
 using Simulator.Util;
+using Camera = DART.Dartboard.Models.Configuration.Camera;
 
 namespace Simulator.Control3D
 {
@@ -21,6 +23,10 @@ namespace Simulator.Control3D
         public Point3D CenterOfMass { get; set; }
 
         public double Mass { get; set; }
+
+        public Camera Camera { get; set; }
+
+        public Dictionary<string, YawDefinition> MotorYawCalculation { get; set; }
 
         public static Robot LoadFromFile(string path)
         {
@@ -71,7 +77,9 @@ namespace Simulator.Control3D
                 Name = cfg.Name,
                 MotorContoller = controller,
                 CenterOfMass = cfg.CenterOfMass.ToPoint3D(),
-                Mass = cfg.Mass
+                Mass = cfg.Mass,
+                Camera = cfg.Camera,
+                MotorYawCalculation = cfg.MotorYawCalculation
             };
         }
 

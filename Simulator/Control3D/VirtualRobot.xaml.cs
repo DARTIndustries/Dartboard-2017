@@ -21,8 +21,21 @@ namespace Simulator.Control3D
         private Dictionary<string, ArrowVisual3D> _thrustArrows;
         public Robot Robot;
         public BulletPhysicsSimulator _physics;
+        private bool _lockCamera;
 
         public bool SimulatePhysics { get; set; }
+
+        public bool LockCamera
+        {
+            get
+            {
+                return _lockCamera;
+            }
+            set
+            {
+                _lockCamera = value;
+            }
+        }
 
         public VirtualRobot()
         {
@@ -33,6 +46,8 @@ namespace Simulator.Control3D
             CompositionTarget.Rendering += this.CompositionTargetRendering;
 
             ShowMotorLabels = true;
+
+            _lockCamera = true;
         }
         
         public void Tick(TimeSpan delta)
@@ -45,11 +60,11 @@ namespace Simulator.Control3D
                 if (SimulatePhysics)
                     _physics.ApplyForce(m.ThrustLocation, m.ThrustVector());
 
-                const int ArrowScale = 10;
+                const int ArrowScale = 5;
 
-                if (m.Thrust == 0)
+                if (Math.Abs(m.Thrust) < 2)
                 {
-                    arrow.Visible = true;
+                    arrow.Visible = false;
                 }
                 else if (m.Thrust > 0)
                 {
@@ -67,7 +82,13 @@ namespace Simulator.Control3D
                 }
             }
 
-            viewport.CameraController.CameraTarget = Robot.Model.Transform.Value.Transform(Robot.CenterOfMass);
+            if (Robot.Camera != null && _lockCamera)
+            {
+                viewport.CameraController.CameraPosition = Robot.Camera.Position.ToPoint3D();
+                viewport.CameraController.CameraTarget = Robot.Camera.LookAt.ToPoint3D();
+            }
+
+            //viewport.CameraController.CameraTarget = Robot.Model.Transform.Value.Transform(Robot.CenterOfMass);
 
             if (SimulatePhysics)
                 _physics.Tick(delta);
@@ -161,5 +182,10 @@ namespace Simulator.Control3D
             }
         }
         #endregion
+
+        private void Viewport_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            _lockCamera = !_lockCamera;
+        }
     }
 }

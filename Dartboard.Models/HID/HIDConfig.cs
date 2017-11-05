@@ -11,5 +11,6 @@ namespace DART.Dartboard.Models.HID
         public bool FailOnNoDeviceFound { get; set; }
         public double? ControllerDeadZone { get; set; }
         public double? JoystickDeadZone { get; set; }
+        public double? JoystickYawDeadZone { get; set; }
     }
 }

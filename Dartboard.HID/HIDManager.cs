@@ -76,6 +76,7 @@ namespace DART.Dartboard.HID
             {
                 ControllerDeadZone = 0.25,
                 JoystickDeadZone = 0.10,
+                JoystickYawDeadZone = 0.5,
                 FailOnNoDeviceFound = false
             };
         }
@@ -119,8 +120,7 @@ namespace DART.Dartboard.HID
             if (js == null)
                 return null;
 
-            if (_config.JoystickDeadZone.HasValue)
-                js.ApplyDeadZone(_config.JoystickDeadZone.Value);
+            js.ApplyDeadZone(_config.JoystickDeadZone ?? 0, _config.JoystickYawDeadZone ?? 0);
 
             js.RoundAll(JoystickPrecision);
             return js;

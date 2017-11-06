@@ -16,7 +16,7 @@ namespace Simulator.Util
     {
         public static Visibility DebugVisibility
         {
-#if DEBUG
+#if _3DEBUG
             get { return Visibility.Visible; }
 #else
             get { return Visibility.Hidden; }

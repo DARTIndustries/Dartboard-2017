@@ -46,8 +46,6 @@ namespace DART.Dartboard.Control
 
                 z *= sliderLevel;
 
-                Log.InfoFormat("X: {0:F2}, Y: {1:F2}, Z: {2:F2}", x, y, z);
-
                 var robotVector = Vector<double>.Build.DenseOfArray(new[] {x, y, z});
 
                 @do.Motor = _robot.CalculateMotorValues(robotVector, joystick.RotationZ, gamepad);

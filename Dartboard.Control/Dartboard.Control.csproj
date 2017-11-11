@@ -86,6 +86,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Debouncer.cs" />
     <Compile Include="GenericRobot\JsonRobot.cs" />
     <Compile Include="GlobalPulse.cs" />
     <Compile Include="InputProcessor.cs" />

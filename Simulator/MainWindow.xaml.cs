@@ -40,7 +40,7 @@ namespace Simulator
             //C:\Users\adam.schiavone\Documents\Git\DART\Dartboard\Simulator\Robots\DartV1
             var robot = Robot.LoadFromFile(@"..\..\Robots\DartV1\robot.json");
 
-            virtualRobot.LoadRobot(robot);
+            virtualRobot.LoadRobot(robot, null);
 
             _gamepad = new Controller(UserIndex.One);
 

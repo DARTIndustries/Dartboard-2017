@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Simulator", "Simulator\Simulator.csproj", "{E5493D32-278F-4DB3-8353-0DE83771B66F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleEcho", "ConsoleEcho\ConsoleEcho.csproj", "{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		3Debug|Any CPU = 3Debug|Any CPU
@@ -139,6 +141,18 @@ Global
 		{E5493D32-278F-4DB3-8353-0DE83771B66F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E5493D32-278F-4DB3-8353-0DE83771B66F}.Release|x64.ActiveCfg = Release|x64
 		{E5493D32-278F-4DB3-8353-0DE83771B66F}.Release|x64.Build.0 = Release|x64
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.3Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.3Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.3Debug|x64.ActiveCfg = Debug|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.3Debug|x64.Build.0 = Debug|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.Debug|x64.Build.0 = Debug|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.Release|x64.ActiveCfg = Release|Any CPU
+		{39B37776-FA1E-4C62-93D5-DD4013E9C9D2}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

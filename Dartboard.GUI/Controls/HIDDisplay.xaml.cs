@@ -79,10 +79,17 @@ namespace DART.Dartboard.GUI.Controls
             get => (JoystickState)GetValue(JoystickStateProperty);
             set
             {
-                Dispatcher.Invoke(() =>
+                try
                 {
-                    SetValue(JoystickStateProperty, value);
-                });
+                    Dispatcher.Invoke(() =>
+                    {
+                        SetValue(JoystickStateProperty, value);
+                    });
+                }
+                catch (TaskCanceledException)
+                {
+                    // suppress
+                }
             }
         }
 

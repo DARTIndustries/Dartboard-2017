@@ -187,6 +187,10 @@
       <Project>{E18D530B-FFDF-4383-86A4-F92A2497221F}</Project>
       <Name>Dartboard.Models</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Dartboard.Networking\Dartboard.Networking.csproj">
+      <Project>{cad7b433-1285-4024-80e2-6a1de5e4a2b6}</Project>
+      <Name>Dartboard.Networking</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dartboard.Utils\Dartboard.Utils.csproj">
       <Project>{550acdc7-6ee7-4256-81c1-0d5ed91bbb9b}</Project>
       <Name>Dartboard.Utils</Name>

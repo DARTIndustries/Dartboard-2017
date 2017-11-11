@@ -10,32 +10,6 @@
         <h:HelixViewport3D x:Name="viewport" Background="CornflowerBlue" CalculateCursorPosition="True" MouseDoubleClick="Viewport_OnMouseDoubleClick" ShowFrameRate="True" ShowCoordinateSystem="True" IsMoveEnabled="False" />
         <StackPanel Visibility="{x:Static util:DebugMode.DebugVisibility}" Orientation="Horizontal">
 
-            <Grid x:Name="CursorPositionBlock" HorizontalAlignment="Left" VerticalAlignment="Top" Background="White" Margin="10,0,0,0"  Opacity="1" IsHitTestVisible="True">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition MinWidth="50"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="x" Margin="5,0,4,0"/>
-                <TextBox Grid.Row="0" Grid.Column="1" BorderThickness="0" TextAlignment="Right" Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                         Text="{Binding Path=CursorPosition.X, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=0.0}" />
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="y" Margin="5,0,4,0" />
-                <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="0" TextAlignment="Right" Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                         Text="{Binding Path=CursorPosition.Y, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=0.0}" />
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="z" Margin="5,0,4,0" />
-                <TextBox Grid.Row="2" Grid.Column="1" BorderThickness="0" TextAlignment="Right" Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                         Text="{Binding Path=CursorPosition.Z, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=0.0}" />
-                <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="Cursor" Background="Beige"/>
-                <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="Position" Background="Beige"/>
-            </Grid>
-
             <Grid x:Name="CursorOnElementPositionBlock" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="20,0,0,0" Background="GhostWhite" Opacity="1" IsHitTestVisible="True">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
@@ -87,33 +61,6 @@
                 <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="Camera Controller" Background="Bisque"/>
                 <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="Position" Background="Bisque"/>
             </Grid>
-
-            <Grid x:Name="Old_CurrentPositionBlock" HorizontalAlignment="Left" VerticalAlignment="Top"  Margin="40,0,0,0" Background="LightGray" Opacity="1" IsHitTestVisible="True">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition MinWidth="50"></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                    <RowDefinition></RowDefinition>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Text="x" Margin="5,0,4,0"/>
-                <TextBox Grid.Row="0" Grid.Column="1" BorderThickness="0" TextAlignment="Right" Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                         Text="{Binding Path=CurrentPosition.X, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=---}" />
-                <TextBlock Grid.Row="1" Grid.Column="0" Text="y" Margin="5,0,4,0" />
-                <TextBox Grid.Row="1" Grid.Column="1" BorderThickness="0" TextAlignment="Right" Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                         Text="{Binding Path=CurrentPosition.Y, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=---}" />
-                <TextBlock Grid.Row="2" Grid.Column="0" Text="z" Margin="5,0,4,0" />
-                <TextBox Grid.Row="2" Grid.Column="1" BorderThickness="0" TextAlignment="Right" Background="{Binding Path=Background, RelativeSource={RelativeSource TemplatedParent}}"
-                         Text="{Binding Path=CurrentPosition.Z, ElementName=viewport, StringFormat={}{0:f3}, FallbackValue=---}" />
-                <TextBlock Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="CurrentPosition" Background="BlanchedAlmond"/>
-                <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Center" Text="(obsolete)" Background="BlanchedAlmond"/>
-            </Grid>
-
         </StackPanel>
         <Canvas Name="overlay" IsHitTestVisible="False" ClipToBounds="False"/>
     </Grid>

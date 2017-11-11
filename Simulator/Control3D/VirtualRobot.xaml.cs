@@ -7,6 +7,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using DART.Dartboard.Models.Configuration;
 using HelixToolkit.Wpf;
 using Simulator.Control3D.Physics;
 using Simulator.Util;
@@ -94,7 +95,7 @@ namespace Simulator.Control3D
                 _physics.Tick(delta);
         }
 
-        public void LoadRobot(Robot robot)
+        public void LoadRobot(Robot robot, RobotConfiguration config)
         {
             Robot = robot;
             
@@ -113,8 +114,12 @@ namespace Simulator.Control3D
                 });
             }
 
+            var model = new ModelVisual3D() {Content = robot.Model};
+
+            model.Transform = new MatrixTransform3D(config.ModelTransformMatrix.ToMatrix3D());
+
             // Add the model 
-            viewport.Children.Add(new ModelVisual3D() {Content = robot.Model});
+            viewport.Children.Add(model);
 
             // Clear thrust arrows, as we're (re)creating them
             _thrustArrows.Clear();

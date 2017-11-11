@@ -43,7 +43,7 @@ namespace DART.Dartboard.GUI
             var _3DRobot = Robot.LoadFromFile(path);
             var robot = JsonConvert.DeserializeObject<RobotConfiguration>(File.ReadAllText(path), new VectorConverter(), new MatrixConverter());
 
-            virtualRobot.LoadRobot(_3DRobot);
+            virtualRobot.LoadRobot(_3DRobot, robot);
 
             _proc = new InputProcessor(new JsonRobot(robot));
 

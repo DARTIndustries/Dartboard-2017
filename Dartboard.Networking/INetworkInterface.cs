@@ -14,6 +14,6 @@ namespace DART.Dartboard.Networking
 
     public interface IMessageFormatter
     {
-        byte[] Format(Do message);
+        byte[] Format(DoRequestMessage message);
     }
 }

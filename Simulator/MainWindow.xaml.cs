@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using DART.Dartboard.Models.Configuration;
 using HelixToolkit.Wpf;
 using IronPython.Modules;
 using Microsoft.Scripting.Utils;
+using Newtonsoft.Json;
 using SharpDX.DirectInput;
 using SharpDX.XInput;
 using Simulator.Control3D;
@@ -38,9 +41,13 @@ namespace Simulator
             InitializeComponent();
 
             //C:\Users\adam.schiavone\Documents\Git\DART\Dartboard\Simulator\Robots\DartV1
-            var robot = Robot.LoadFromFile(@"..\..\Robots\DartV1\robot.json");
+            var path = @"..\..\..\Robots\DartV1\robot.json";
 
-            virtualRobot.LoadRobot(robot, null);
+            var robot = Robot.LoadFromFile(path);
+            var robotcfg = JsonConvert.DeserializeObject<RobotConfiguration>(File.ReadAllText(path), new DART.Dartboard.Utils.VectorConverter(), new DART.Dartboard.Utils.MatrixConverter());
+
+            virtualRobot.SimulatePhysics = true;
+            virtualRobot.LoadRobot(robot, robotcfg);
 
             _gamepad = new Controller(UserIndex.One);
 
@@ -52,7 +59,7 @@ namespace Simulator
 
             _timer = new Timer(1);
             _timer.Elapsed += TOnElapsed;
-            //_timer.Start();
+            _timer.Start();
         }
 
 

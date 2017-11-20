@@ -46,11 +46,18 @@ namespace DART.Dartboard.GUI.Controls
         {
             get => (GamepadState) GetValue(GamepadStateProperty);
             set {
-            Dispatcher.Invoke(() =>
-            {
-                SetValue(GamepadStateProperty, value);
-            });
-        }
+                try
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        SetValue(GamepadStateProperty, value);
+                    });
+                }
+                catch (TaskCanceledException)
+                {
+                    // supress
+                }
+            }
         }
 
         public static void OnGamepadStatePropertyChanged(DependencyObject dep, DependencyPropertyChangedEventArgs args)
@@ -158,13 +165,37 @@ namespace DART.Dartboard.GUI.Controls
                 DrawCrosshairDot(drawingContext, dot, 7.5);
                 DrawCrosshairDirection(drawingContext, dot, 25, 30.0 * JoystickState.RotationZ);
 
-                var activeRect = CalculateRect(throttleRect, JoystickState.Slider);
+                Brush overrideBrush = null;
+                string overrideString = null;
+                double? heightOverride = null;
+
+                if (JoystickState.Slider < 0.0001)
+                {
+                    if (DateTime.Now.Millisecond > 500)
+                        overrideBrush = Brushes.Red;
+                    else
+                        overrideBrush = Brushes.Orange;
+
+                    overrideString = "NO\nTHROT";
+
+                    heightOverride = 1;
+                }
+
+
+                if (JoystickState.Buttons[2])
+                {
+                    overrideBrush = Brushes.Red;
+                    overrideString = "Over\nDrive";
+                }
+                
+
+                var activeRect = CalculateRect(throttleRect, heightOverride ?? JoystickState.Slider);
                 FillGuage(
                     drawingContext,
                     activeRect,
-                    JoystickState.Slider,
-                    fillOverride: JoystickState.Buttons[2] ? Brushes.Red:null,
-                    textOverride: JoystickState.Buttons[2] ? "Over\nDrive":null);
+                    heightOverride ?? JoystickState.Slider,
+                    fillOverride: overrideBrush,
+                    textOverride: overrideString);
             }
 
             #endregion

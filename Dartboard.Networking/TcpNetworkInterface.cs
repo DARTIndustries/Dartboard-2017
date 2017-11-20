@@ -41,7 +41,7 @@ namespace DART.Dartboard.Networking
         {
             if (_client != null && _client.Connected)
             {
-                var body = _formatter.Format(message);
+                var body = _formatter.Format(new DoRequestMessage{Do = message});
                 _client.GetStream().Write(body, 0, body.Length);
             }
         }

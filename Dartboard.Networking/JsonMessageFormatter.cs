@@ -11,7 +11,7 @@ namespace DART.Dartboard.Networking
 {
     public class JsonMessageFormatter : IMessageFormatter
     {
-        public byte[] Format(Do message)
+        public byte[] Format(DoRequestMessage message)
         {
             return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message) + "\n");
         }

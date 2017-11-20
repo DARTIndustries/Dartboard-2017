@@ -27,13 +27,12 @@ namespace DART.Dartboard.GUI
     {
         private Timer t;
 
-        private ILog _log = LogManager.GetLogger<MainWindow>();
+        private ILog _log = LogManager.GetLogger<WebWindow>();
 
         private InputProcessor _proc;
 
         public WebWindow()
         {
-
             InitializeComponent();
             ConsoleOutput.Text = "";
             ConsoleOutput.ScrollToEnd();
@@ -61,7 +60,8 @@ namespace DART.Dartboard.GUI
 
             _log.Info(uri);
 
-            _interface = new TcpNetworkInterface(new JsonMessageFormatter(), new Uri("tcp://localhost:5000"));
+            //_interface = new TcpNetworkInterface(new JsonMessageFormatter(), new Uri("tcp://129.25.217.182:5000"));
+            _interface = new TcpNetworkInterface(new JsonMessageFormatter(), new Uri("tcp://10.250.29.35:5000"));
 
             GlobalPulse.Pulse += GlobalPulseOnPulse;
         }
@@ -102,7 +102,7 @@ namespace DART.Dartboard.GUI
                 virtualRobot.Tick(timeSpan);
             });
 
-            _interface.Send(_do);
+            _interface?.Send(_do);
         }
     }
 }

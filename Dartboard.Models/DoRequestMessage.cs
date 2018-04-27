@@ -22,11 +22,21 @@ namespace DART.Dartboard.Models
         
         public string Lights { get; set; }
 
+        public Servo Servo { get; set; }
+
+        public Camera Camera { get; set; }
+
+    }
+    
+    public class Camera
+    {
+        public short[] Angles { get; set; }
+        public sbyte[] Velocity { get; set; }
     }
 
     public class Servo
     {
-        public sbyte[] Angles { get; set; }
+        public short[] Angles { get; set; }
         public sbyte[] Velocity { get; set; }
     }
 

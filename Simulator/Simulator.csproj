@@ -226,6 +226,9 @@
     <None Include="Robots\DartV1\robot.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Robots\DartV2\DART-V2-color.stl" />
+    <None Include="Robots\DartV2\DART-V2.stl" />
+    <None Include="Robots\DartV2\robot.json" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

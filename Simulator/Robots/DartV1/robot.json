@@ -1,6 +1,6 @@
 {
   "Name": "DartV1",
-  "ModelFile": "DART-V1-new-color.stl",
+  "ModelFile": "DART-V2.stl",
   "Motors": [
     {
       "Key": "FrontLeft",

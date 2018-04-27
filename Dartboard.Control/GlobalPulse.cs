@@ -16,7 +16,7 @@ namespace DART.Dartboard.Control
 
         public static event Action<TimeSpan> Pulse;
 
-        private const int _defaultTime = 10;
+        private const int _defaultTime = 50;
 
         static GlobalPulse()
         {

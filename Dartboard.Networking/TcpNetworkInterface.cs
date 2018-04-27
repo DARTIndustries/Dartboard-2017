@@ -30,9 +30,9 @@ namespace DART.Dartboard.Networking
             try
             {
                 _client = new TcpClient(endpoint.Host, endpoint.Port);
-            }
+            }  
             catch (SocketException e)
-            {
+            { 
                 Log.Fatal(e);
             }
         }
@@ -43,6 +43,7 @@ namespace DART.Dartboard.Networking
             {
                 var body = _formatter.Format(new DoRequestMessage{Do = message});
                 _client.GetStream().Write(body, 0, body.Length);
+                System.Diagnostics.Debug.Print(Encoding.UTF8.GetString(body));
             }
         }
     }

@@ -41,7 +41,7 @@ namespace DART.Dartboard.GUI
             HIDManager.SharedManager.AcquireAll();
 
 
-            var path = @".\Robots\DartV1\robot.json";
+            var path = @"C:\Users\DART\Source\Repos\Dartboard\Simulator\Robots\DartV2\robot.json";
             var _3DRobot = Robot.LoadFromFile(path);
             var robot = JsonConvert.DeserializeObject<RobotConfiguration>(File.ReadAllText(path), new VectorConverter(), new MatrixConverter());
 
@@ -60,8 +60,9 @@ namespace DART.Dartboard.GUI
 
             _log.Info(uri);
 
-            //_interface = new TcpNetworkInterface(new JsonMessageFormatter(), new Uri("tcp://129.25.217.182:5000"));
-            _interface = new TcpNetworkInterface(new JsonMessageFormatter(), new Uri("tcp://10.250.29.35:5000"));
+            _interface = new TcpNetworkInterface(new JsonMessageFormatter(), new Uri("tcp://10.0.0.2:5000"));
+           // _interface = new TcpNetworkInterface(new JsonMessageFormatter(), new Uri("tcp://129.25.218.183:5000"));
+            //_interface = new TcpNetworkInterface(new JsonMessageFormatter(), new Uri("tcp://10.250.29.35:5000"));
 
             GlobalPulse.Pulse += GlobalPulseOnPulse;
         }
@@ -87,20 +88,28 @@ namespace DART.Dartboard.GUI
                 _buttonGroup[i].Update(joy.Buttons[i]);
             }
 
-            if (_buttonGroup[7].RisingEdge())
+            //if (_buttonGroup[7].RisingEdge())
+            //{
+            //    browser.Reload();
+            //}
+
+            //if (_buttonGroup[8].RisingEdge() || joy.Buttons[9])
+            //{
+            //    _log.Warn(JsonConvert.SerializeObject(_do));
+            //}
+            try
             {
-                browser.Reload();
+                Dispatcher.Invoke(() =>
+                {
+                    virtualRobot.Tick(timeSpan);
+                });
+            }
+            catch (System.Threading.Tasks.TaskCanceledException)
+            {
+                //suppress
             }
 
-            if (_buttonGroup[8].RisingEdge() || joy.Buttons[9])
-            {
-                _log.Warn(JsonConvert.SerializeObject(_do));
-            }
-
-            Dispatcher.Invoke(() =>
-            {
-                virtualRobot.Tick(timeSpan);
-            });
+            
 
             _interface?.Send(_do);
         }

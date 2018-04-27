@@ -13,7 +13,11 @@ namespace DART.Dartboard.Networking
     {
         public byte[] Format(DoRequestMessage message)
         {
-            return Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message) + "\n");
+            return Encoding.UTF8.GetBytes(
+                JsonConvert.SerializeObject(message, new JsonSerializerSettings()
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                }) + "\n");
         }
     }
 }

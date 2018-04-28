@@ -12,6 +12,7 @@ namespace Dart.Robots.Adam
     public class Adam2018 : AbstractRobot
     {
         private const string DeviceIpAddress = "localhost";
+        //private const string DeviceIpAddress = "10.0.0.2";
         private DateTime startupTime;
 
         public Adam2018() : base(new Uri($"http://{DeviceIpAddress}:5000"))

@@ -65,6 +65,18 @@
     <None Include="app.manifest" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dart.Robots.Adam\Dart.Robots.Adam.csproj">
+      <Project>{7542A987-3CA6-42BF-9ADC-6464413189F6}</Project>
+      <Name>Dart.Robots.Adam</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dartboard.Integration\Dartboard.Integration.csproj">
+      <Project>{8D58D0B2-ACA5-42EC-8497-FCE14D42F24E}</Project>
+      <Name>Dartboard.Integration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dartboard.Networking\Dartboard.Networking.csproj">
+      <Project>{3768D4FE-F01B-4C91-A09D-568A2743C251}</Project>
+      <Name>Dartboard.Networking</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MJPEGDecoder\MJPEGDecoder.csproj">
       <Project>{f4774419-6fb7-4e89-962a-560e32d6073f}</Project>
       <Name>MJPEGDecoder</Name>

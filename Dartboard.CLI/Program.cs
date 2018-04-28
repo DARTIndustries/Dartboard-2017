@@ -51,8 +51,9 @@ namespace Dartboard.CLI
             log.Info("Starting");
 
             AbstractRobot robot = new Adam2018();
-            IMessageFormatter formatter = new JsonMessageFormatter();
-            var anc = new DirectNetworkClient(robot, formatter);
+            var heartbeatFormatter = new JsonMessageFormatter<Heartbeat>();
+            var msgFormatter = new JsonMessageFormatter<DoRequestMessage>();
+            var anc = new DirectNetworkClient<Heartbeat, DoRequestMessage>(robot, heartbeatFormatter, msgFormatter);
             var tokenSource = new CancellationTokenSource();
             anc.Start(tokenSource.Token);
 
@@ -110,7 +111,7 @@ namespace Dartboard.CLI
                 //}
 
 
-                var msg = new DoRequestMessage()
+                var msg = new DoRequestMessage(TimeSpan.FromSeconds(2))
                 {
                     Do = new IndirectDoElement()
                     {
@@ -119,11 +120,7 @@ namespace Dartboard.CLI
                             Velocity = movementVector,
                             AngularVelocity = headingVector
                         },
-                        Camera = new ServoElement()
-                        {
-                            
-                        },
-                        Lights = robot.GetColor()
+                        //Lights = robot.GetColor()
                     }
                 };
 
@@ -136,7 +133,7 @@ namespace Dartboard.CLI
                         Motors = new sbyte[robot.Motors.Count],
                         Camera = oldDo.Camera,
                         Claw = oldDo.Claw,
-                        Lights = oldDo.Lights
+                        //Lights = oldDo.Lights
                     };
                 }
 

@@ -10,10 +10,11 @@ using NLog;
 
 namespace Dartboard.Networking
 {
-    public class DirectNetworkClient : AbstractNetworkClient
+    public class DirectNetworkClient<TIncoming, TOutgoing> : AbstractNetworkClient<TIncoming, TOutgoing> where TOutgoing: Expireable
     {
         private readonly AbstractRobot _robot;
-        private readonly IMessageFormatter _formatter;
+        private readonly IMessageFormatter<TIncoming> _inboundFormatter;
+        private readonly IMessageFormatter<TOutgoing> _outboundFormatter;
         private readonly ILogger Log = LogManager.GetCurrentClassLogger();
         private readonly Thread _heartbeatThread;
         private readonly Thread _outgoingThread;
@@ -21,17 +22,18 @@ namespace Dartboard.Networking
         private CancellationToken _token;
         private TcpClient _client;
 
-        public ConcurrentQueue<Heartbeat> Inbox;
-        public ConcurrentQueue<DoRequestMessage> Outbox;
+        public ConcurrentQueue<TIncoming> Inbox;
+        public ConcurrentQueue<TOutgoing> Outbox;
 
 
-        public DirectNetworkClient(AbstractRobot robot, IMessageFormatter formatter)
+        public DirectNetworkClient(AbstractRobot robot, IMessageFormatter<TIncoming> inboundFormatter, IMessageFormatter<TOutgoing> outboundFormatter)
         {
             _robot = robot;
-            _formatter = formatter;
+            _inboundFormatter = inboundFormatter;
+            _outboundFormatter = outboundFormatter;
 
-            Inbox = new ConcurrentQueue<Heartbeat>();
-            Outbox = new ConcurrentQueue<DoRequestMessage>();
+            Inbox = new ConcurrentQueue<TIncoming>();
+            Outbox = new ConcurrentQueue<TOutgoing>();
 
             _heartbeatThread = new Thread(Incoming);
             _outgoingThread = new Thread(Outgoing);
@@ -87,8 +89,15 @@ namespace Dartboard.Networking
                             {
                                 if (reader.Peek() > 0)
                                 {
-                                    var heartbeat = _formatter.Format(reader.ReadLine());
-                                    Inbox.Enqueue(heartbeat);
+                                    var inb = _inboundFormatter.Format(reader.ReadLine());
+                                    if (Received != null)
+                                    {
+                                        Received(inb);
+                                    }
+                                    else
+                                    {
+                                        Inbox.Enqueue(inb);
+                                    }
                                 }
                             }
                         }
@@ -111,6 +120,12 @@ namespace Dartboard.Networking
                 {
                     if (Outbox.TryDequeue(out var msg))
                     {
+                        if (msg.Expiration < DateTime.Now)
+                        {
+                            Log.Debug("Ignoring Expired Message");
+                            continue;
+                        }
+
                         if (_client == null)
                             return;
 
@@ -119,7 +134,7 @@ namespace Dartboard.Networking
 
                         if (_client.Connected)
                         {
-                            var body = _formatter.Format(msg);
+                            var body = _outboundFormatter.Format(msg);
                             _client.GetStream().Write(body, 0, body.Length);
                         }
                     }
@@ -132,7 +147,7 @@ namespace Dartboard.Networking
             }
         }
 
-        public override void Send(DoRequestMessage msg)
+        public override void Send(TOutgoing msg)
         {
             Outbox.Enqueue(msg);
         }

@@ -1,8 +1,11 @@
-﻿namespace Dartboard.Networking.Message
+﻿using System;
+
+namespace Dartboard.Networking.Message
 {
-    public class DoRequestMessage
+
+    public class DoRequestMessage : Expireable
     {
-        public DoRequestMessage()
+        public DoRequestMessage(TimeSpan ttl) : base(ttl)
         {
             //Do = new DoElement();
 

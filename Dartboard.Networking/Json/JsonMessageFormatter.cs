@@ -6,7 +6,7 @@ using Newtonsoft.Json.Converters;
 
 namespace Dartboard.Networking.Json
 {
-    public class JsonMessageFormatter : IMessageFormatter
+    public class JsonMessageFormatter<T> : IMessageFormatter<T>
     {
         private readonly List<JsonConverter> converters = new List<JsonConverter>
         {
@@ -14,7 +14,7 @@ namespace Dartboard.Networking.Json
             new ColorConverter(), 
         };
 
-        public byte[] Format(DoRequestMessage msg)
+        public byte[] Format(T msg)
         {
             var jsonBody = JsonConvert.SerializeObject(msg, Formatting.None, new JsonSerializerSettings()
             {
@@ -25,9 +25,9 @@ namespace Dartboard.Networking.Json
             return Encoding.UTF8.GetBytes(jsonBody + "\n");
         }
 
-        public Heartbeat Format(string msg)
+        public T Format(string msg)
         {
-            return JsonConvert.DeserializeObject<Heartbeat>(msg);
+            return JsonConvert.DeserializeObject<T>(msg);
         }
     }
 }

@@ -51,5 +51,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MJPEGDecoder\MJPEGDecoder.csproj">
+      <Project>{f4774419-6fb7-4e89-962a-560e32d6073f}</Project>
+      <Name>MJPEGDecoder</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

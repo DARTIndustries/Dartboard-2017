@@ -5,8 +5,6 @@ namespace Dartboard.Networking.Message
     public class IndirectDoElement : DoElement
     {
         public MotorVector MotorVector { get; set; }
-
-        public Vector3 Heading { get; set; }
     }
 
     public class MotorVector
@@ -26,7 +24,7 @@ namespace Dartboard.Networking.Message
     {
         public ServoElement Camera { get; set; }
         public ServoElement Claw { get; set; }
-        public Color Lights { get; set; }
+       // public Color Lights { get; set; }
 
     }
 

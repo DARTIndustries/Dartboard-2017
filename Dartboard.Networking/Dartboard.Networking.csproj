@@ -58,6 +58,7 @@
     <Compile Include="Message\DoRequestMessage.cs" />
     <Compile Include="IMessageFormatter.cs" />
     <Compile Include="Json\JsonMessageFormatter.cs" />
+    <Compile Include="Message\Expireable.cs" />
     <Compile Include="NetworkClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Message\RequestElement.cs" />

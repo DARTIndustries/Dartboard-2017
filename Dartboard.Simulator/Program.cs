@@ -1,7 +1,13 @@
-﻿using System;
+﻿using Dart.Robots.Adam;
+using Dartboard.Integration;
+using Dartboard.Networking;
+using Dartboard.Networking.Json;
+using Dartboard.Networking.Message;
+using System;
 using System.IO;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace Dartboard.Simulator
 {
@@ -21,16 +27,18 @@ namespace Dartboard.Simulator
             {
                 try
                 {
+                    AbstractRobot robot = new Adam2018();
+                    var heartbeatFormatter = new JsonMessageFormatter<Heartbeat>();
+                    var msgFormatter = new JsonMessageFormatter<DoRequestMessage>();
+                    var anc = new DirectNetworkClient<DoRequestMessage, Heartbeat>(robot, msgFormatter, heartbeatFormatter);
+                    var tokenSource = new CancellationTokenSource();
+                    anc.Start(tokenSource.Token);
 
-                    TcpListener listener = new TcpListener(IPAddress.Any, 5000);
-                    listener.Start();
-                    while (true)
+                    anc.Received += (msg) =>
                     {
-                        Console.Write("Awaiting Client: ");
-                        var client = listener.AcceptTcpClient();
-                        Console.WriteLine("Connected.");
-                        client.GetStream().CopyTo(Console.OpenStandardOutput());
-                    }
+                        Console.WriteLine(System.Text.Encoding.UTF8.GetString(msgFormatter.Format(msg)));
+                    };
+                    
                 }
                 catch (Exception) { }
             }

@@ -2,9 +2,9 @@
 
 namespace Dartboard.Networking
 {
-    public interface IMessageFormatter
+    public interface IMessageFormatter<T>
     {
-        byte[] Format(DoRequestMessage msg);
-        Heartbeat Format(string msg);
+        byte[] Format(T msg);
+        T Format(string msg);
     }
 }

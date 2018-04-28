@@ -1,6 +1,12 @@
-﻿namespace Dartboard.Networking.Message
+﻿using System;
+
+namespace Dartboard.Networking.Message
 {
-    public class Heartbeat
+    public class Heartbeat : Expireable
     {
+        public Heartbeat(TimeSpan ttl) : base(ttl)
+        {
+
+        }
     }
 }

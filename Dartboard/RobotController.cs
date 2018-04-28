@@ -81,15 +81,12 @@ namespace Dartboard
                         }
                     };
 
-                    var request = new DoRequestMessage
+                    var request = new DoRequestMessage(TimeSpan.FromSeconds(2))
                     {
                         Do = new IndirectDoElement
                         {
                             Camera = camera,
                             Claw = claw,
-                            Heading = headingVector,
-                            Lights = Color.CornflowerBlue,
-                            MovementVector = moveVector
                         }
                     };
 

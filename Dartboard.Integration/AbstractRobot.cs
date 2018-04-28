@@ -28,6 +28,11 @@ namespace Dartboard.Integration
             DeviceEndpoint = endpoint;
             CameraAddresses = new List<Uri>();
         }
+
+        public virtual Color GetColor()
+        {
+            return Color.CornflowerBlue;
+        }
     }
 
     public class ModelInfo

@@ -9,6 +9,7 @@ using Dartboard.Integration;
 using Dartboard.Networking;
 using Dartboard.Networking.Json;
 using Dartboard.Networking.Message;
+using Dartboard.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using NLog;
@@ -21,6 +22,30 @@ namespace Dartboard.CLI
 
         static void Main(string[] args)
         {
+            //float xmin = 0, ymin = 0, xmax = 0, ymax = 0;
+
+            //List<Point> points = new List<Point>();
+
+            //for (int i = 0; i < 5000; i++)
+            //{
+            //    var s = GamePad.GetState(PlayerIndex.One);
+
+            //    var x = s.ThumbSticks.Left.X;
+            //    var y = s.ThumbSticks.Left.Y;
+
+            //    points.Add(new Point(x.ToSByte(), y.ToSByte()));
+            //    Thread.Sleep(1);
+            //}
+
+            //foreach (var point in points.Distinct())
+            //{
+            //    Console.WriteLine($"({point.X}, {point.Y})");
+
+            //}
+
+            //Console.ReadLine();
+
+
             LogManager.EnableLogging();
             ILogger log = LogManager.GetCurrentClassLogger();
             log.Info("Starting");
@@ -40,7 +65,7 @@ namespace Dartboard.CLI
 
                 // Pilot Calculations
 
-                var z = -pilot.Triggers.Left + pilot.Triggers.Right;
+                var z = (pilot.IsButtonDown(Buttons.LeftShoulder) ? -1:0) + (pilot.IsButtonDown(Buttons.RightShoulder) ? 1 : 0);
                 var movementVector = Normalize(new Vector3(pilot.ThumbSticks.Left, z));
                 movementVector *= throttle;
 
@@ -50,7 +75,7 @@ namespace Dartboard.CLI
                  * Yaw      rZ
                  */
 
-                var rz = (pilot.IsButtonDown(Buttons.LeftShoulder) ? -1:0) + (pilot.IsButtonDown(Buttons.RightShoulder) ? 1 : 0);
+                var rz = -pilot.Triggers.Left + pilot.Triggers.Right;
                 var headingVector = Normalize(new Vector3(pilot.ThumbSticks.Right.Y, pilot.ThumbSticks.Right.X, rz));
                 headingVector *= throttle;
 
@@ -74,17 +99,47 @@ namespace Dartboard.CLI
                 if (pilot.IsButtonDown(Buttons.X))
                     throttle = 0;
 
+                bool zeroOverride =  pilot.IsButtonDown(Buttons.B);
+
                 // Captain Calculations
+
+                var cameraVector = Normalize(captain.ThumbSticks.Left);
+                //var cameraMovement = new ServoElement()
+                //{
+                //    Velocity = new byte[] { cameraVector.X.ToByte(0, 180), cameraVector.Y.ToByte(0, 180)}
+                //}
+
 
                 var msg = new DoRequestMessage()
                 {
                     Do = new IndirectDoElement()
                     {
-                        MovementVector = movementVector,
-                        Heading = headingVector,
-                        Lights = Color.Beige
+                        MotorVector = new MotorVector()
+                        {
+                            Velocity = movementVector,
+                            AngularVelocity = headingVector
+                        },
+                        Camera = new ServoElement()
+                        {
+                            
+                        },
+                        Lights = robot.GetColor()
                     }
                 };
+
+
+                if (zeroOverride)
+                {
+                    var oldDo = msg.Do;
+                    msg.Do = new DirectDoElement()
+                    {
+                        Motors = new sbyte[robot.Motors.Count],
+                        Camera = oldDo.Camera,
+                        Claw = oldDo.Claw,
+                        Lights = oldDo.Lights
+                    };
+                }
+
                 anc.Outbox.Enqueue(msg);
                 Thread.Sleep(50);
             }
@@ -95,7 +150,16 @@ namespace Dartboard.CLI
 
         private static Vector3 Normalize(Vector3 vec)
         {
+            return vec;
             var max = (new[] {Math.Abs(vec.X), Math.Abs(vec.Y), Math.Abs(vec.Z)}).Max();
+            vec.Normalize();
+            return vec * max;
+        }
+
+        private static Vector2 Normalize(Vector2 vec)
+        {
+            return vec;
+            var max = (new[] { Math.Abs(vec.X), Math.Abs(vec.Y)}).Max();
             vec.Normalize();
             return vec * max;
         }

@@ -68,8 +68,8 @@ namespace Dartboard
                     {
                         Velocity = new[]
                         {
-                            Utility.ToByte(copilot.ThumbSticks.Left.X),
-                            Utility.ToByte(copilot.ThumbSticks.Left.Y)
+                            Utility.ToSByte(copilot.ThumbSticks.Left.X),
+                            Utility.ToSByte(copilot.ThumbSticks.Left.Y)
                         }
                     };
 
@@ -77,7 +77,7 @@ namespace Dartboard
                     {
                         Velocity = new[]
                         {
-                            Utility.ToByte(-copilot.Triggers.Left + copilot.Triggers.Right)
+                            Utility.ToSByte(-copilot.Triggers.Left + copilot.Triggers.Right)
                         }
                     };
 

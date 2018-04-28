@@ -10,7 +10,7 @@ namespace Dartboard.Networking.Json
     {
         public override void WriteJson(JsonWriter writer, Vector3 value, JsonSerializer serializer)
         {
-            var conv = new [] { value.X.ToByte(), value.Y.ToByte(), value.Z.ToByte() };
+            var conv = new [] { value.X.ToSByte(), value.Y.ToSByte(), value.Z.ToSByte() };
             serializer.Serialize(writer, conv);
         }
 

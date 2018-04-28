@@ -4,11 +4,11 @@
     {
         public DoRequestMessage()
         {
-            Do = new DoElement();
+            //Do = new DoElement();
 
-            Request = new RequestElement();
+            //Request = new RequestElement();
 
-            Config = new ConfigElement();
+            //Config = new ConfigElement();
         }
 
         public DoElement Do { get; set; }

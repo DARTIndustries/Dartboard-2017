@@ -4,10 +4,18 @@ namespace Dartboard.Networking.Message
 {
     public class IndirectDoElement : DoElement
     {
-        public Vector3 MovementVector { get; set; }
+        public MotorVector MotorVector { get; set; }
 
         public Vector3 Heading { get; set; }
     }
+
+    public class MotorVector
+    {
+        public Vector3 Velocity { get; set; }
+
+        public Vector3 AngularVelocity { get; set; }
+    }
+
 
     public class DirectDoElement : DoElement
     {

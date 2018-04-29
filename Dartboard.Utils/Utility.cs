@@ -31,6 +31,17 @@ namespace Dartboard.Utils
             return (sbyte)(d * sbyte.MaxValue);
         }
 
+        public static int ToInt(this float d, int scalar)
+        {
+            if (d >= 1)
+                return scalar;
+
+            if (d <= -1)
+                return -scalar;
+
+            return (int)(d * scalar);
+        }
+
         public static byte ToByte(this float d, byte zero, byte one)
         {
             if (d >= 1)
@@ -39,8 +50,8 @@ namespace Dartboard.Utils
             if (d <= -1)
                 return zero;
 
-            return 0;
-            //return (sbyte)()
+            var dist = one - zero;
+            return (byte)(zero + (d * dist));
         }
 
         public static double ToDouble(this sbyte b)

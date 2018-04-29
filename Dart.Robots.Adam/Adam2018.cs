@@ -11,9 +11,12 @@ namespace Dart.Robots.Adam
 {
     public class Adam2018 : AbstractRobot
     {
-        private const string DeviceIpAddress = "localhost";
+        private const string DeviceIpAddress = "129.25.218.183";
+        //private const string DeviceIpAddress = "localhost";
         //private const string DeviceIpAddress = "10.0.0.2";
         private DateTime startupTime;
+
+        public bool ColorWheel { get; set; }
 
         public Adam2018() : base(new Uri($"http://{DeviceIpAddress}:5000"))
         {
@@ -34,8 +37,11 @@ namespace Dart.Robots.Adam
 
         public override Color GetColor()
         {
+            if (!ColorWheel)
+                return Color.CornflowerBlue;
+
             var diff = DateTime.Now - startupTime;
-            var angle = (Math.Sin(diff.TotalSeconds) + 1) * 180;
+            var angle = (Math.Sin(diff.TotalSeconds/2) + 1) * 180;
             var c = Dartboard.Utils.Utility.ColorFromHSV(angle, 1, 1);
             return new Color(c.R, c.G, c.B, c.A);
         }

@@ -21,19 +21,4 @@ namespace Dartboard.Networking.Json
             return new Vector3(array[0].ToFloat(), array[1].ToFloat(), array[2].ToFloat());
         }
     }
-
-    public class ColorConverter : JsonConverter<Color>
-    {
-        public override void WriteJson(JsonWriter writer, Color value, JsonSerializer serializer)
-        {
-            writer.WriteValue("#" + value.R.ToString("X2") + value.G.ToString("X2") + value.B.ToString("X2"));
-        }
-
-        public override Color ReadJson(JsonReader reader, Type objectType, Color existingValue, bool hasExistingValue, JsonSerializer serializer)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override bool CanRead => false;
-    }
 }

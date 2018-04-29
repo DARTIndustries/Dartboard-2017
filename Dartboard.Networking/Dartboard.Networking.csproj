@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DirectNetworkClient.cs" />
+    <Compile Include="Json\ColorConverter.cs" />
     <Compile Include="Message\DoElement.cs" />
     <Compile Include="Message\ConfigElement.cs" />
     <Compile Include="Message\DoRequestMessage.cs" />

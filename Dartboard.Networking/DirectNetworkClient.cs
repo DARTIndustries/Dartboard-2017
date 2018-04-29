@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.IO;
+using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading;
 using Dartboard.Integration;
@@ -25,6 +27,7 @@ namespace Dartboard.Networking
         public ConcurrentQueue<TIncoming> Inbox;
         public ConcurrentQueue<TOutgoing> Outbox;
 
+        public Func<TOutgoing, TOutgoing, bool> ReductionFunc { get; set; }
 
         public DirectNetworkClient(AbstractRobot robot, IMessageFormatter<TIncoming> inboundFormatter, IMessageFormatter<TOutgoing> outboundFormatter)
         {
@@ -114,6 +117,7 @@ namespace Dartboard.Networking
         private void Outgoing()
         {
             Log.Info("Start Outgoing Thread");
+            TOutgoing lastSent = null;
             while (!_token.IsCancellationRequested)
             {
                 try
@@ -125,6 +129,8 @@ namespace Dartboard.Networking
                             Log.Debug("Ignoring Expired Message");
                             continue;
                         }
+                        if (ReductionFunc?.Invoke(lastSent, msg) ?? false)
+                            continue;
 
                         if (_client == null)
                             return;
@@ -136,6 +142,7 @@ namespace Dartboard.Networking
                         {
                             var body = _outboundFormatter.Format(msg);
                             _client.GetStream().Write(body, 0, body.Length);
+                            lastSent = msg;
                         }
                     }
                 }

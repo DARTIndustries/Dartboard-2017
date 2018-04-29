@@ -12,6 +12,13 @@ namespace Dartboard.Networking.Message
         public Vector3 Velocity { get; set; }
 
         public Vector3 AngularVelocity { get; set; }
+
+        public override string ToString()
+        {
+            return
+                $"Velocity: ({Velocity.X:F2}, {Velocity.Y:F2}, {Velocity.Z:F2}) [{Velocity.Length():F3}]; " +
+                $"Angular: ({AngularVelocity.X:F2}, {AngularVelocity.Y:F2}, {AngularVelocity.Z:F2}) [{AngularVelocity.Length():F3}]";
+        }
     }
 
 
@@ -24,15 +31,15 @@ namespace Dartboard.Networking.Message
     {
         public ServoElement Camera { get; set; }
         public ServoElement Claw { get; set; }
-       // public Color Lights { get; set; }
+        public Color Lights { get; set; }
 
     }
 
     public class ServoElement
     {
-        public sbyte[] Angles { get; set; }
+        public int[] Angles { get; set; }
 
-        public sbyte[] Velocity { get; set; }
+        public int[] Velocity { get; set; }
     }
 
     public enum RequestFields

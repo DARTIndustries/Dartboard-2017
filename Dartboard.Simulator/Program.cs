@@ -27,18 +27,41 @@ namespace Dartboard.Simulator
             {
                 try
                 {
-                    AbstractRobot robot = new Adam2018();
-                    var heartbeatFormatter = new JsonMessageFormatter<Heartbeat>();
                     var msgFormatter = new JsonMessageFormatter<DoRequestMessage>();
-                    var anc = new DirectNetworkClient<DoRequestMessage, Heartbeat>(robot, msgFormatter, heartbeatFormatter);
-                    var tokenSource = new CancellationTokenSource();
-                    anc.Start(tokenSource.Token);
+                    msgFormatter.IncludeTypes = true;
 
-                    anc.Received += (msg) =>
+                    TcpListener l = new TcpListener(IPAddress.Any, 5000);
+                    l.Start();
+                    while (true)
                     {
-                        Console.WriteLine(System.Text.Encoding.UTF8.GetString(msgFormatter.Format(msg)));
-                    };
-                    
+                        //Console.Clear();
+                        Console.WriteLine("Awaiting Client...");
+                        var client = l.AcceptTcpClient();
+                        using (var reader = new StreamReader(client.GetStream()))
+                        {
+                            while (client.Connected)
+                            {
+                                var msg = reader.ReadLine();
+                                //Console.WriteLine(msg);
+                                try
+                                {
+                                    var command = msgFormatter.Format(msg);
+                                    if (command.Do is DirectDoElement dido)
+                                    {
+                                        Console.WriteLine("Motor Values: " + string.Join(", ", dido.Motors));
+                                    }
+                                    else if (command.Do is IndirectDoElement iddo)
+                                    {
+                                        Console.WriteLine(iddo.MotorVector);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    Console.WriteLine("Error while deserializing.");
+                                }
+                            }
+                        }
+                    }
                 }
                 catch (Exception) { }
             }

@@ -50,10 +50,13 @@ namespace Dartboard.CLI
             ILogger log = LogManager.GetCurrentClassLogger();
             log.Info("Starting");
 
-            AbstractRobot robot = new Adam2018();
+            AbstractRobot robot = new Adam2018() { ColorWheel = true };
+            
             var heartbeatFormatter = new JsonMessageFormatter<Heartbeat>();
             var msgFormatter = new JsonMessageFormatter<DoRequestMessage>();
+            //msgFormatter.IncludeTypes = true;
             var anc = new DirectNetworkClient<Heartbeat, DoRequestMessage>(robot, heartbeatFormatter, msgFormatter);
+            anc.ReductionFunc = MessageCompare;
             var tokenSource = new CancellationTokenSource();
             anc.Start(tokenSource.Token);
 
@@ -67,7 +70,7 @@ namespace Dartboard.CLI
                 // Pilot Calculations
 
                 var z = (pilot.IsButtonDown(Buttons.LeftShoulder) ? -1:0) + (pilot.IsButtonDown(Buttons.RightShoulder) ? 1 : 0);
-                var movementVector = Normalize(new Vector3(pilot.ThumbSticks.Left, z));
+                var movementVector = new Vector3(pilot.ThumbSticks.Left, z);
                 movementVector *= throttle;
 
                 /*
@@ -77,7 +80,7 @@ namespace Dartboard.CLI
                  */
 
                 var rz = -pilot.Triggers.Left + pilot.Triggers.Right;
-                var headingVector = Normalize(new Vector3(pilot.ThumbSticks.Right.Y, pilot.ThumbSticks.Right.X, rz));
+                var headingVector = new Vector3(pilot.ThumbSticks.Right.Y, pilot.ThumbSticks.Right.X, rz);
                 headingVector *= throttle;
 
                 if (pilot.IsButtonDown(Buttons.DPadDown))
@@ -104,11 +107,11 @@ namespace Dartboard.CLI
 
                 // Captain Calculations
 
-                var cameraVector = Normalize(captain.ThumbSticks.Left);
-                //var cameraMovement = new ServoElement()
-                //{
-                //    Velocity = new byte[] { cameraVector.X.ToByte(0, 180), cameraVector.Y.ToByte(0, 180)}
-                //}
+                var cameraVector = captain.ThumbSticks.Left;
+                var cameraMovement = new ServoElement()
+                {
+                    Velocity = new[] {cameraVector.X.ToInt(180), cameraVector.Y.ToInt(180)}
+                };
 
 
                 var msg = new DoRequestMessage(TimeSpan.FromSeconds(2))
@@ -120,7 +123,7 @@ namespace Dartboard.CLI
                             Velocity = movementVector,
                             AngularVelocity = headingVector
                         },
-                        //Lights = robot.GetColor()
+                        Lights = robot.GetColor()
                     }
                 };
 
@@ -133,7 +136,7 @@ namespace Dartboard.CLI
                         Motors = new sbyte[robot.Motors.Count],
                         Camera = oldDo.Camera,
                         Claw = oldDo.Claw,
-                        //Lights = oldDo.Lights
+                        Lights = oldDo.Lights
                     };
                 }
 
@@ -145,20 +148,75 @@ namespace Dartboard.CLI
 
         }
 
-        private static Vector3 Normalize(Vector3 vec)
+        private static bool MessageCompare(DoRequestMessage left, DoRequestMessage right)
         {
-            return vec;
-            var max = (new[] {Math.Abs(vec.X), Math.Abs(vec.Y), Math.Abs(vec.Z)}).Max();
-            vec.Normalize();
-            return vec * max;
+            if (left == null && right == null)
+                return true;
+
+            if (left == null || right == null)
+                return false;
+
+            if (left.Do.GetType() != right.Do.GetType())
+                return false;
+
+            if (left.Do is DirectDoElement)
+            {
+                var l = (DirectDoElement)left.Do;
+                var r = (DirectDoElement)right.Do;
+
+                if (!SequenceCompare(l.Motors, r.Motors))
+                    return false;
+            }
+            else if (left.Do is IndirectDoElement)
+            {
+                var l = (IndirectDoElement)left.Do;
+                var r = (IndirectDoElement)right.Do;
+
+                if (l.MotorVector.Velocity != r.MotorVector.Velocity)
+                    return false;
+
+                if (l.MotorVector.AngularVelocity != r.MotorVector.AngularVelocity)
+                    return false;
+            }
+
+            if (left.Do.Lights != right.Do.Lights)
+                return false;
+
+            //if (left.Do.Camera == null || right.Do.Camera == null)
+            //    return false;
+
+            //if (!SequenceCompare(left.Do.Camera.Velocity, right.Do.Camera.Velocity))
+            //    return false;
+
+            //if (!SequenceCompare(left.Do.Camera.Angles, right.Do.Camera.Angles))
+            //    return false;
+
+            //if (!SequenceCompare(left.Do.Claw.Velocity, right.Do.Claw.Velocity))
+            //    return false;
+
+            //if (!SequenceCompare(left.Do.Claw.Angles, right.Do.Claw.Angles))
+            //    return false;
+
+            return true;
         }
 
-        private static Vector2 Normalize(Vector2 vec)
+        private static bool SequenceCompare<T>(T[] left, T[] right) where T: IEquatable<T>
         {
-            return vec;
-            var max = (new[] { Math.Abs(vec.X), Math.Abs(vec.Y)}).Max();
-            vec.Normalize();
-            return vec * max;
+            if (left.Length != right.Length)
+                return false;
+
+            for (int i = 0; i < left.Length; i++)
+            {
+                if (!left[i].Equals(right[i]))
+                    return false;
+            }
+
+            return true;
+        }
+
+        public static bool BothNullOrBothNot(object left, object right)
+        {
+            return (left == null) ^ (right == null);
         }
     }
 }

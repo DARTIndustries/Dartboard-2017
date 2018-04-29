@@ -8,26 +8,33 @@ namespace Dartboard.Networking.Json
 {
     public class JsonMessageFormatter<T> : IMessageFormatter<T>
     {
-        private readonly List<JsonConverter> converters = new List<JsonConverter>
+        public bool IncludeTypes
         {
-            new Vector3Converter(),
-            new ColorConverter(), 
+            get => _settings.TypeNameHandling == TypeNameHandling.All;
+            set => _settings.TypeNameHandling = value ? TypeNameHandling.All : TypeNameHandling.None;
+        }
+
+        private JsonSerializerSettings _settings = new JsonSerializerSettings()
+        {
+            Converters = new List<JsonConverter>()
+            {
+                new Vector3Converter(),
+                new ColorConverter(),
+            },
+            NullValueHandling = NullValueHandling.Ignore,
+            TypeNameHandling = TypeNameHandling.None,
         };
 
         public byte[] Format(T msg)
         {
-            var jsonBody = JsonConvert.SerializeObject(msg, Formatting.None, new JsonSerializerSettings()
-            {
-                Converters = converters,
-                NullValueHandling = NullValueHandling.Ignore
-            });
+            var jsonBody = JsonConvert.SerializeObject(msg, Formatting.None, _settings);
 
             return Encoding.UTF8.GetBytes(jsonBody + "\n");
         }
 
         public T Format(string msg)
         {
-            return JsonConvert.DeserializeObject<T>(msg);
+            return JsonConvert.DeserializeObject<T>(msg, _settings);
         }
     }
 }

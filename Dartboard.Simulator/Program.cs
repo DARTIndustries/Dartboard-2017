@@ -54,6 +54,11 @@ namespace Dartboard.Simulator
                                     {
                                         Console.WriteLine(iddo.MotorVector);
                                     }
+
+                                    if (command.Do.Buzzer != null)
+                                    {
+                                        Console.WriteLine("Buzzer: " + (command.Do.Buzzer.State ? "On":"Off"));
+                                    }
                                 }
                                 catch (Exception ex)
                                 {

@@ -60,7 +60,7 @@ namespace Dartboard.CLI
             var tokenSource = new CancellationTokenSource();
             anc.Start(tokenSource.Token);
 
-            float throttle = 1;
+            float throttle = 0.75f;
 
             while (true)
             {
@@ -80,7 +80,7 @@ namespace Dartboard.CLI
                  */
 
                 var rz = -pilot.Triggers.Left + pilot.Triggers.Right;
-                var headingVector = new Vector3(pilot.ThumbSticks.Right.Y, pilot.ThumbSticks.Right.X, rz);
+                var headingVector = new Vector3(pilot.ThumbSticks.Right.Y, -pilot.ThumbSticks.Right.X, rz);
                 headingVector *= throttle;
 
                 if (pilot.IsButtonDown(Buttons.DPadDown))
@@ -114,6 +114,7 @@ namespace Dartboard.CLI
                 };
 
 
+
                 var msg = new DoRequestMessage(TimeSpan.FromSeconds(2))
                 {
                     Do = new IndirectDoElement()
@@ -126,6 +127,15 @@ namespace Dartboard.CLI
                         Lights = robot.GetColor()
                     }
                 };
+
+                if (captain.IsButtonDown(Buttons.A))
+                {
+                    msg.Do.Buzzer = new BuzzerElement() { State = true };
+                }
+                if (captain.IsButtonDown(Buttons.B))
+                {
+                    msg.Do.Buzzer = new BuzzerElement() { State = false };
+                }
 
 
                 if (zeroOverride)

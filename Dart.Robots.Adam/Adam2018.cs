@@ -11,9 +11,9 @@ namespace Dart.Robots.Adam
 {
     public class Adam2018 : AbstractRobot
     {
-        private const string DeviceIpAddress = "129.25.218.183";
+        //private const string DeviceIpAddress = "129.25.218.183";
         //private const string DeviceIpAddress = "localhost";
-        //private const string DeviceIpAddress = "10.0.0.2";
+        private const string DeviceIpAddress = "10.0.0.2";
         private DateTime startupTime;
 
         public bool ColorWheel { get; set; }

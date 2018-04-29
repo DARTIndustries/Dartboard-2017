@@ -32,7 +32,12 @@ namespace Dartboard.Networking.Message
         public ServoElement Camera { get; set; }
         public ServoElement Claw { get; set; }
         public Color Lights { get; set; }
+        public BuzzerElement Buzzer { get; set; }
+    }
 
+    public class BuzzerElement
+    {
+        public bool State { get; set; }
     }
 
     public class ServoElement

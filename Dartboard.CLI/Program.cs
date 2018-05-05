@@ -19,33 +19,10 @@ namespace Dartboard.CLI
     class Program
     {
         private const float ThrottleDelta = 0.05f;
+        private const float ε = 0.000001f;
 
         static void Main(string[] args)
         {
-            //float xmin = 0, ymin = 0, xmax = 0, ymax = 0;
-
-            //List<Point> points = new List<Point>();
-
-            //for (int i = 0; i < 5000; i++)
-            //{
-            //    var s = GamePad.GetState(PlayerIndex.One);
-
-            //    var x = s.ThumbSticks.Left.X;
-            //    var y = s.ThumbSticks.Left.Y;
-
-            //    points.Add(new Point(x.ToSByte(), y.ToSByte()));
-            //    Thread.Sleep(1);
-            //}
-
-            //foreach (var point in points.Distinct())
-            //{
-            //    Console.WriteLine($"({point.X}, {point.Y})");
-
-            //}
-
-            //Console.ReadLine();
-
-
             LogManager.EnableLogging();
             ILogger log = LogManager.GetCurrentClassLogger();
             log.Info("Starting");
@@ -67,6 +44,8 @@ namespace Dartboard.CLI
                 var pilot = GamePad.GetState(PlayerIndex.One);
                 var captain = GamePad.GetState(PlayerIndex.Two);
 
+                var msg = new DoRequestMessage(TimeSpan.FromSeconds(2));
+
                 // Pilot Calculations
 
                 var z = (pilot.IsButtonDown(Buttons.LeftShoulder) ? -1:0) + (pilot.IsButtonDown(Buttons.RightShoulder) ? 1 : 0);
@@ -82,6 +61,15 @@ namespace Dartboard.CLI
                 var rz = -pilot.Triggers.Left + pilot.Triggers.Right;
                 var headingVector = new Vector3(pilot.ThumbSticks.Right.Y, -pilot.ThumbSticks.Right.X, rz);
                 headingVector *= throttle;
+
+                msg.Do = new IndirectDoElement()
+                {
+                    MotorVector = new MotorVector()
+                    {
+                        AngularVelocity = headingVector,
+                        Velocity = movementVector
+                    },
+                };
 
                 if (pilot.IsButtonDown(Buttons.DPadDown))
                 {
@@ -103,31 +91,25 @@ namespace Dartboard.CLI
                 if (pilot.IsButtonDown(Buttons.X))
                     throttle = 0;
 
-                bool zeroOverride =  pilot.IsButtonDown(Buttons.B);
+                if (pilot.IsButtonDown(Buttons.B))
+                {
+                    msg.Do = new DirectDoElement()
+                    {
+                        Motors = new sbyte[robot.Motors.Count]
+                    };
+                }
 
                 // Captain Calculations
 
                 var cameraVector = captain.ThumbSticks.Left;
-                var cameraMovement = new ServoElement()
+                if (cameraVector.Length() > 0)
                 {
-                    Velocity = new[] {cameraVector.X.ToInt(180), cameraVector.Y.ToInt(180)}
-                };
-
-
-
-                var msg = new DoRequestMessage(TimeSpan.FromSeconds(2))
-                {
-                    Do = new IndirectDoElement()
+                    msg.Do.Camera = new ServoElement()
                     {
-                        MotorVector = new MotorVector()
-                        {
-                            Velocity = movementVector,
-                            AngularVelocity = headingVector
-                        },
-                        Lights = robot.GetColor()
-                    }
-                };
-
+                        Velocity = new[] { cameraVector.X.ToInt(180), cameraVector.Y.ToInt(180) }
+                    };
+                }
+                
                 if (captain.IsButtonDown(Buttons.A))
                 {
                     msg.Do.Buzzer = new BuzzerElement() { State = true };
@@ -137,18 +119,15 @@ namespace Dartboard.CLI
                     msg.Do.Buzzer = new BuzzerElement() { State = false };
                 }
 
-
-                if (zeroOverride)
+                var clawVelocity = -captain.Triggers.Left + captain.Triggers.Right;
+                if (Math.Abs(clawVelocity) > ε)
                 {
-                    var oldDo = msg.Do;
-                    msg.Do = new DirectDoElement()
+                    msg.Do.Claw = new ServoElement()
                     {
-                        Motors = new sbyte[robot.Motors.Count],
-                        Camera = oldDo.Camera,
-                        Claw = oldDo.Claw,
-                        Lights = oldDo.Lights
+                        Velocity = new[] {clawVelocity.ToInt(180)}
                     };
                 }
+
 
                 anc.Outbox.Enqueue(msg);
                 Thread.Sleep(50);

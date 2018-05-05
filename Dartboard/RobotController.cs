@@ -89,6 +89,7 @@ namespace Dartboard
                             AngularVelocity = headingVector,
                             Velocity = movementVector
                         },
+                        Lights = _robot.GetColor()
                     };
 
                     if (pilot.IsButtonDown(Buttons.Y))

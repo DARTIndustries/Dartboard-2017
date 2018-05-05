@@ -29,8 +29,8 @@ namespace Dartboard.Networking.Message
 
     public class DoElement
     {
-        public ServoElement Camera { get; set; }
-        public ServoElement Claw { get; set; }
+        public CameraElement Camera { get; set; }
+        public ClawElement Claw { get; set; }
         public Color Lights { get; set; }
         public BuzzerElement Buzzer { get; set; }
     }
@@ -40,11 +40,14 @@ namespace Dartboard.Networking.Message
         public bool State { get; set; }
     }
 
-    public class ServoElement
+    public class CameraElement
     {
         public int[] Angles { get; set; }
+    }
 
-        public int[] Velocity { get; set; }
+    public class ClawElement
+    {
+        public int Angle { get; set; }
     }
 
     public enum RequestFields

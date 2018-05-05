@@ -52,7 +52,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AbstractRobot.cs" />
+    <Compile Include="ModelInfo.cs" />
+    <Compile Include="Motor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Servo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 
 namespace Dartboard.Integration
 {
@@ -33,28 +32,21 @@ namespace Dartboard.Integration
         {
             return Color.CornflowerBlue;
         }
-    }
 
-    public class ModelInfo
-    {
-        public Model Model { get; set; }
+        /// <summary>
+        /// Camera home X position, from 0 to 180
+        /// </summary>
+        public virtual int CameraHomeX => 90;
 
-        public Matrix BaseTransform { get; set; }
-    }
+        /// <summary>
+        /// Camera home X position, from 0 to 180
+        /// </summary>
+        public virtual int CameraHomeY => 90;
 
-    public class Servo
-    {
+        public virtual float ThrottleDelta => 0.05f;
 
-    }
+        public virtual float CameraDelta => 0.05f;
 
-    public class Motor
-    {
-        public string Name { get; set; }
-
-        public Vector3 ThrustVector { get; set; }
-
-        public Vector3 Location { get; set; }
-
-        public double MaximumThrust { get; set; }
+        public virtual float ClawDelta => 0.05f;
     }
 }

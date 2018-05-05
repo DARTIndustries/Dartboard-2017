@@ -81,6 +81,10 @@
       <Project>{317a5e95-afd0-402a-a77c-2245358de6c0}</Project>
       <Name>Dartboard.Utils</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Dartboard\Dartboard.csproj">
+      <Project>{01a0fefb-f99e-4a1d-b0cb-9ac7607c82f4}</Project>
+      <Name>Dartboard</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

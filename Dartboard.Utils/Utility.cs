@@ -12,23 +12,23 @@ namespace Dartboard.Utils
         public static sbyte ToSByte(this double d)
         {
             if (d >= 1)
-                return sbyte.MaxValue;
+                return SByte.MaxValue;
 
             if (d <= -1)
-                return sbyte.MinValue;
+                return SByte.MinValue;
 
-            return (sbyte)(d * sbyte.MaxValue);
+            return (sbyte)(d * SByte.MaxValue);
         }
 
         public static sbyte ToSByte(this float d)
         {
             if (d >= 1)
-                return sbyte.MaxValue;
+                return SByte.MaxValue;
 
             if (d <= -1)
-                return sbyte.MinValue;
+                return SByte.MinValue;
 
-            return (sbyte)(d * sbyte.MaxValue);
+            return (sbyte)(d * SByte.MaxValue);
         }
 
         public static int ToInt(this float d, int scalar)
@@ -57,7 +57,7 @@ namespace Dartboard.Utils
         public static double ToDouble(this sbyte b)
         {
             if (b == -1)
-                return sbyte.MinValue;
+                return SByte.MinValue;
 
             return b / 127.0;
         }
@@ -65,10 +65,22 @@ namespace Dartboard.Utils
         public static float ToFloat(this sbyte b)
         {
             if (b == -1)
-                return sbyte.MinValue;
+                return SByte.MinValue;
 
             return b / 127.0f;
         }
+
+        public static float Clamp(this float f, float min = -1f, float max = 1f)
+        {
+            if (f > max)
+                return max;
+
+            if (f < min)
+                return min;
+
+            return f;
+        }
+
 
         public static Color ColorFromHSV(double hue, double saturation, double value)
         {
@@ -93,6 +105,20 @@ namespace Dartboard.Utils
                 return Color.FromArgb(255, t, p, v);
             else
                 return Color.FromArgb(255, v, p, q);
+        }
+
+        public static bool SequenceCompare<T>(T[] left, T[] right) where T : IEquatable<T>
+        {
+            if (left.Length != right.Length)
+                return false;
+
+            for (int i = 0; i < left.Length; i++)
+            {
+                if (!left[i].Equals(right[i]))
+                    return false;
+            }
+
+            return true;
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Dartboard.Simulator
                             while (client.Connected)
                             {
                                 var msg = reader.ReadLine();
-                                //Console.WriteLine(msg);
+                                Console.WriteLine(msg);
                                 try
                                 {
                                     var command = msgFormatter.Format(msg);

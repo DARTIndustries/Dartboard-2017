@@ -91,20 +91,6 @@ namespace Dartboard
                         },
                     };
 
-                    if (pilot.IsButtonDown(Buttons.DPadDown))
-                    {
-                        _state.Throttle -= _robot.ThrottleDelta;
-                        if (_state.Throttle < 0)
-                            _state.Throttle = 0;
-                    }
-
-                    if (pilot.IsButtonDown(Buttons.DPadUp))
-                    {
-                        _state.Throttle += _robot.ThrottleDelta;
-                        if (_state.Throttle > 1)
-                            _state.Throttle = 1;
-                    }
-
                     if (pilot.IsButtonDown(Buttons.Y))
                         _state.Throttle = 1;
 
@@ -130,7 +116,7 @@ namespace Dartboard
                         _state.CameraY += cameraVector.Y * _robot.CameraDelta;
                     }
 
-                    if (captain.IsButtonDown(Buttons.RightStick))
+                    if (captain.IsButtonDown(Buttons.LeftStick))
                     {
                         sendCam = true;
                         _state.CameraX = (_robot.CameraHomeX - 90) / 180.0f;
@@ -163,6 +149,23 @@ namespace Dartboard
                             Angle = _state.Claw.ToInt(90) + 90
                         };
                     }
+
+                    // Joint Calculations
+
+                    if (pilot.IsButtonDown(Buttons.DPadDown) || captain.IsButtonDown(Buttons.DPadDown))
+                    {
+                        _state.Throttle -= _robot.ThrottleDelta;
+                        if (_state.Throttle < 0)
+                            _state.Throttle = 0;
+                    }
+
+                    if (pilot.IsButtonDown(Buttons.DPadUp) || captain.IsButtonDown(Buttons.DPadUp))
+                    {
+                        _state.Throttle += _robot.ThrottleDelta;
+                        if (_state.Throttle > 1)
+                            _state.Throttle = 1;
+                    }
+
 
 
                     _networkClient.Outbox.Enqueue(msg);

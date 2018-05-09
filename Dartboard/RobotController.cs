@@ -120,8 +120,8 @@ namespace Dartboard
                     if (captain.IsButtonDown(Buttons.LeftStick))
                     {
                         sendCam = true;
-                        _state.CameraX = (_robot.CameraHomeX - 90) / 180.0f;
-                        _state.CameraY = (_robot.CameraHomeY - 90) / 180.0f;
+                        _state.CameraX = (_robot.CameraConfiguration.X.Home - 90) / 180.0f;
+                        _state.CameraY = (_robot.CameraConfiguration.X.Home - 90) / 180.0f;
                     }
 
                     if (sendCam)

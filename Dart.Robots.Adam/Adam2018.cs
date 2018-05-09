@@ -45,5 +45,21 @@ namespace Dart.Robots.Adam
             var c = Dartboard.Utils.Utility.ColorFromHSV(angle, 1, 1);
             return new Color(c.R, c.G, c.B, c.A);
         }
+
+        public override CameraConfiguration CameraConfiguration => new CameraConfiguration()
+        {
+            X = new CameraAxis()
+            {
+                Min = 0,
+                Max = 180,
+                Home = 90
+            },
+            Y = new CameraAxis()
+            {
+                Min = 0,
+                Max = 180,
+                Home = 90
+            }
+        };
     }
 }

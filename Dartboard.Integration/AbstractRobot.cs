@@ -33,20 +33,41 @@ namespace Dartboard.Integration
             return Color.CornflowerBlue;
         }
 
-        /// <summary>
-        /// Camera home X position, from 0 to 180
-        /// </summary>
-        public virtual int CameraHomeX => 90;
-
-        /// <summary>
-        /// Camera home X position, from 0 to 180
-        /// </summary>
-        public virtual int CameraHomeY => 90;
 
         public virtual float ThrottleDelta => 0.05f;
 
         public virtual float CameraDelta => 0.05f;
 
         public virtual float ClawDelta => 0.05f;
+
+        public virtual CameraConfiguration CameraConfiguration =>
+            new CameraConfiguration()
+            {
+                X = new CameraAxis()
+                {
+                    Min = 0,
+                    Max = 180,
+                    Home = 90
+                },
+                Y = new CameraAxis()
+                {
+                    Min = 0,
+                    Max = 180,
+                    Home = 90
+                }
+            };
+    }
+
+    public class CameraConfiguration
+    {
+        public CameraAxis X { get; set; }
+        public CameraAxis Y { get; set; }
+    }
+
+    public class CameraAxis
+    {
+        public int Min { get; set; }
+        public int Max { get; set; }
+        public int Home { get; set; }
     }
 }

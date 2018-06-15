@@ -19,6 +19,8 @@ namespace Dartboard
     public class RobotController
     {
         private const float E = 0.000001f;
+        private const PlayerIndex PilotPlayerIndex = PlayerIndex.One;
+        private const PlayerIndex CaptainPlayerIndex = PlayerIndex.Two;
 
         private readonly AbstractRobot _robot;
         private readonly TimeSpan _messagePeriod;
@@ -61,8 +63,8 @@ namespace Dartboard
             {
                 EnsureTime(_messagePeriod, () =>
                 {
-                    var pilot = GamePad.GetState(PlayerIndex.One);
-                    var captain = GamePad.GetState(PlayerIndex.Two);
+                    var pilot = GamePad.GetState(PilotPlayerIndex);
+                    var captain = GamePad.GetState(CaptainPlayerIndex);
 
                     var msg = new DoRequestMessage(TimeSpan.FromSeconds(2));
 

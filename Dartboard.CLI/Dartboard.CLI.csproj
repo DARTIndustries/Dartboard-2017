@@ -32,7 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="MonoGame.Framework, Version=3.6.0.1625, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MonoGame.Framework.WindowsDX.3.6.0.1625\lib\net40\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.5.3\lib\net45\NLog.dll</HintPath>
     </Reference>
@@ -81,13 +84,9 @@
       <Project>{317a5e95-afd0-402a-a77c-2245358de6c0}</Project>
       <Name>Dartboard.Utils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Dartboard\Dartboard.csproj">
-      <Project>{01a0fefb-f99e-4a1d-b0cb-9ac7607c82f4}</Project>
-      <Name>Dartboard</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Daryboard.Control\Daryboard.Control.csproj">
+    <ProjectReference Include="..\Daryboard.Control\Dartboard.Control.csproj">
       <Project>{da4cd822-dfdf-4711-b54f-0d98753433c1}</Project>
-      <Name>Daryboard.Control</Name>
+      <Name>Dartboard.Control</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

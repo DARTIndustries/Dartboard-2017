@@ -30,6 +30,7 @@ namespace Dartboard.CLI
 
             // Must send types for simulator
             var ctrl = new RobotController(robot, TimeSpan.FromMilliseconds(50), sendTypes: false);
+
             ctrl.Start(tokenSource.Token);
 
             Console.ReadLine();

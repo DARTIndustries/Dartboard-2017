@@ -142,14 +142,14 @@ namespace Dartboard
                     }
 
                     var clawVelocity = -captain.Triggers.Left + captain.Triggers.Right;
-                    if (Math.Abs(clawVelocity) > E)
-                    {
-                        _state.Claw += clawVelocity * _robot.ClawDelta;
+                    //if (Math.Abs(clawVelocity) > E)
+                    //{
+                        _state.Claw = clawVelocity;
                         msg.Do.Claw = new ClawElement()
                         {
                             Angle = _state.Claw.ToInt(90) + 90
                         };
-                    }
+                    //}
 
                     // Joint Calculations
 

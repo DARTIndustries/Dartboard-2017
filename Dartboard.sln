@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dartboard.Networking", "Dartboard.Networking\Dartboard.Networking.csproj", "{3768D4FE-F01B-4C91-A09D-568A2743C251}"
 EndProject
@@ -20,6 +20,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dartboard", "Dartboard\Dartboard.csproj", "{01A0FEFB-F99E-4A1D-B0CB-9AC7607C82F4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dartboard.CLI", "Dartboard.CLI\Dartboard.CLI.csproj", "{56F2C461-E7C9-4271-95D5-9903836C9BFA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Daryboard.Control", "Daryboard.Control\Daryboard.Control.csproj", "{DA4CD822-DFDF-4711-B54F-0D98753433C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -97,6 +99,14 @@ Global
 		{56F2C461-E7C9-4271-95D5-9903836C9BFA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{56F2C461-E7C9-4271-95D5-9903836C9BFA}.Release|x86.ActiveCfg = Release|Any CPU
 		{56F2C461-E7C9-4271-95D5-9903836C9BFA}.Release|x86.Build.0 = Release|Any CPU
+		{DA4CD822-DFDF-4711-B54F-0D98753433C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA4CD822-DFDF-4711-B54F-0D98753433C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA4CD822-DFDF-4711-B54F-0D98753433C1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DA4CD822-DFDF-4711-B54F-0D98753433C1}.Debug|x86.Build.0 = Debug|Any CPU
+		{DA4CD822-DFDF-4711-B54F-0D98753433C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA4CD822-DFDF-4711-B54F-0D98753433C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA4CD822-DFDF-4711-B54F-0D98753433C1}.Release|x86.ActiveCfg = Release|Any CPU
+		{DA4CD822-DFDF-4711-B54F-0D98753433C1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

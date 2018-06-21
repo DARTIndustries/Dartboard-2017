@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MJPEGDecoder", "MJPEGDecode
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dartboard.CLI", "Dartboard.CLI\Dartboard.CLI.csproj", "{56F2C461-E7C9-4271-95D5-9903836C9BFA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dartboard.Control", "Daryboard.Control\Dartboard.Control.csproj", "{DA4CD822-DFDF-4711-B54F-0D98753433C1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dartboard.Control", "Dartboard.Control\Dartboard.Control.csproj", "{DA4CD822-DFDF-4711-B54F-0D98753433C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

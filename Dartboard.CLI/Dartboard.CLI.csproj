@@ -84,7 +84,7 @@
       <Project>{317a5e95-afd0-402a-a77c-2245358de6c0}</Project>
       <Name>Dartboard.Utils</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Daryboard.Control\Dartboard.Control.csproj">
+    <ProjectReference Include="..\Dartboard.Control\Dartboard.Control.csproj">
       <Project>{da4cd822-dfdf-4711-b54f-0d98753433c1}</Project>
       <Name>Dartboard.Control</Name>
     </ProjectReference>

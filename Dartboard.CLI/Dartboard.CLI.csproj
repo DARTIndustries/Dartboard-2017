@@ -80,6 +80,10 @@
       <Project>{3768d4fe-f01b-4c91-a09d-568a2743c251}</Project>
       <Name>Dartboard.Networking</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Dartboard.TheBox\Dartboard.TheBox.csproj">
+      <Project>{6032d40d-42b1-4561-9b71-3e95336a000b}</Project>
+      <Name>Dartboard.TheBox</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dartboard.Utils\Dartboard.Utils.csproj">
       <Project>{317a5e95-afd0-402a-a77c-2245358de6c0}</Project>
       <Name>Dartboard.Utils</Name>

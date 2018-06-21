@@ -19,6 +19,8 @@ namespace Dartboard.Integration
 
         public List<Uri> CameraAddresses { get; protected set; }
 
+        public ColorMode ColorMode { get; set; }
+
         protected AbstractRobot(Uri endpoint)
         {
             Motors = new List<Motor>();
@@ -30,9 +32,22 @@ namespace Dartboard.Integration
 
         public virtual Color GetColor()
         {
-            return Color.CornflowerBlue;
+            switch (ColorMode)
+            {
+                case ColorMode.Off:
+                    return Color.Black;
+                case ColorMode.SignalAffirmative:
+                    return Color.Green;
+                case ColorMode.SignalInconclusive:
+                    return Color.Yellow;
+                case ColorMode.SignalNegative:
+                    return Color.Red;
+                case ColorMode.Display:
+                    return Color.CornflowerBlue;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
-
 
         public virtual float ThrottleDelta => 0.05f;
 
@@ -56,6 +71,15 @@ namespace Dartboard.Integration
                     Home = 90
                 }
             };
+    }
+
+    public enum ColorMode
+    {
+        Off = 0,
+        SignalAffirmative,
+        SignalInconclusive,
+        SignalNegative,
+        Display = 100
     }
 
     public class CameraConfiguration

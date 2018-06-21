@@ -10,6 +10,7 @@ using Dartboard.Integration;
 using Dartboard.Networking;
 using Dartboard.Networking.Json;
 using Dartboard.Networking.Message;
+using Dartboard.TheBox;
 using Dartboard.Utils;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -24,15 +25,17 @@ namespace Dartboard
 
         private readonly AbstractRobot _robot;
         private readonly TimeSpan _messagePeriod;
+        private readonly Box _box;
         private readonly RobotState _state;
         private readonly DirectNetworkClient<Heartbeat, DoRequestMessage> _networkClient;
 
         private CancellationToken _token;
 
-        public RobotController(AbstractRobot robot, TimeSpan period, bool sendTypes = false)
+        public RobotController(AbstractRobot robot, TimeSpan period, Box box = null, bool sendTypes = false)
         {
             _robot = robot;
             _messagePeriod = period;
+            _box = box;
             _state = new RobotState {Throttle = 0.75f};
 
             var heartbeatFormatter = new JsonMessageFormatter<Heartbeat>();
@@ -51,6 +54,7 @@ namespace Dartboard
         {
             _token = token;
 
+            _box?.SetColor(Color.CornflowerBlue);
             _networkClient.Start(token);
 
             var t = new Thread(MainControl);
@@ -91,7 +95,6 @@ namespace Dartboard
                             AngularVelocity = headingVector,
                             Velocity = movementVector
                         },
-                        Lights = _robot.GetColor()
                     };
 
                     if (pilot.IsButtonDown(Buttons.Y))
@@ -134,16 +137,28 @@ namespace Dartboard
                         };
                     }
 
-                    if (captain.IsButtonDown(Buttons.A))
+                    if (captain.IsButtonDown(Buttons.X))
                     {
                         msg.Do.Buzzer = new BuzzerElement() { State = true };
                     }
-                    if (captain.IsButtonDown(Buttons.B))
+                    if (captain.IsButtonDown(Buttons.Y))
                     {
                         msg.Do.Buzzer = new BuzzerElement() { State = false };
                     }
 
-                    var clawVelocity = -captain.Triggers.Left + captain.Triggers.Right;
+                    bool a = captain.IsButtonDown(Buttons.A);
+                    bool b = captain.IsButtonDown(Buttons.B);
+
+                    if (a && !b)
+                        _robot.ColorMode = ColorMode.SignalAffirmative;
+                    else if (b && !a)
+                        _robot.ColorMode = ColorMode.SignalNegative;
+                    else if (b && a)
+                        _robot.ColorMode = ColorMode.SignalInconclusive;
+                    else
+                        _robot.ColorMode = ColorMode.Off;
+
+                        var clawVelocity = -captain.Triggers.Left + captain.Triggers.Right;
                     //if (Math.Abs(clawVelocity) > E)
                     //{
                         _state.Claw = clawVelocity;
@@ -155,21 +170,31 @@ namespace Dartboard
 
                     // Joint Calculations
 
-                    if (pilot.IsButtonDown(Buttons.DPadDown) || captain.IsButtonDown(Buttons.DPadDown))
+                    if (pilot.IsButtonDown(Buttons.DPadDown))
                     {
                         _state.Throttle -= _robot.ThrottleDelta;
                         if (_state.Throttle < 0)
                             _state.Throttle = 0;
                     }
 
-                    if (pilot.IsButtonDown(Buttons.DPadUp) || captain.IsButtonDown(Buttons.DPadUp))
+                    if (pilot.IsButtonDown(Buttons.DPadUp))
                     {
                         _state.Throttle += _robot.ThrottleDelta;
                         if (_state.Throttle > 1)
                             _state.Throttle = 1;
                     }
 
+                    if (captain.IsButtonDown(Buttons.DPadDown))
+                    {
+                        _robot.ColorMode = ColorMode.Off;
+                    }
 
+                    if (captain.IsButtonDown(Buttons.DPadUp))
+                    {
+                        _robot.ColorMode = ColorMode.Display;
+                    }
+
+                    msg.Do.Lights = _robot.GetColor();
 
                     _networkClient.Outbox.Enqueue(msg);
                 });

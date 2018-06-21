@@ -37,13 +37,27 @@ namespace Dart.Robots.Adam
 
         public override Color GetColor()
         {
-            if (!ColorWheel)
-                return Color.CornflowerBlue;
+            switch (ColorMode)
+            {
+                case ColorMode.Off:
+                    return Color.Black;
+                case ColorMode.SignalOne:
+                    return Color.Green;
+                case ColorMode.SignalTwo:
+                    return Color.Yellow;
+                case ColorMode.SignalThree:
+                    return Color.Red;
+                case ColorMode.Display:
+                    if (!ColorWheel)
+                        return Color.CornflowerBlue;
 
-            var diff = DateTime.Now - startupTime;
-            var angle = (Math.Sin(diff.TotalSeconds/2) + 1) * 180;
-            var c = Dartboard.Utils.Utility.ColorFromHSV(angle, 1, 1);
-            return new Color(c.R, c.G, c.B, c.A);
+                    var diff = DateTime.Now - startupTime;
+                    var angle = (Math.Sin(diff.TotalSeconds / 2) + 1) * 180;
+                    var c = Dartboard.Utils.Utility.ColorFromHSV(angle, 1, 1);
+                    return new Color(c.R, c.G, c.B, c.A);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         public override CameraConfiguration CameraConfiguration => new CameraConfiguration()
